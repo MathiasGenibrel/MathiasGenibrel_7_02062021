@@ -11,3 +11,6 @@ icon-left-font.svg
 icon.png
 
 SQL
+
+node_modules
+.env
