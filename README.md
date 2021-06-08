@@ -1,4 +1,4 @@
-![Logo groupomania](./docs/logo/icon-left-font-monochrome-white.png)
+![Logo groupomania](./docs/img/icon-left-font-monochrome-white.png)
 
 # Restrictions
 
