@@ -10,9 +10,21 @@ module.exports = (sequelize, Sequelize) => {
       },
     },
     vote: {
-      type: Sequelize.TINYINT,
+      type: Sequelize.ENUM("none", "upVote", "downVote"),
       allowNull: false,
-      defaultValue: 0,
+      defaultValue: "none",
+    },
+    postId: {
+      //foreignKey of posts table
+      type: Sequelize.UUID,
+      required: true,
+      allowNull: false,
+    },
+    userId: {
+      //foreignKey of posts table
+      type: Sequelize.UUID,
+      required: true,
+      allowNull: false,
     },
   });
 

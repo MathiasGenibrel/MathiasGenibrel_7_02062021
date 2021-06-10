@@ -5,9 +5,6 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4,
-      validate: {
-        notNull: true,
-      },
     },
     name: {
       type: Sequelize.STRING(64),
@@ -18,8 +15,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING(128),
       allowNull: false,
     },
-    desc: {
-      //description
+    description: {
       type: Sequelize.STRING(64),
       defaultValue: "Nouveau",
     },

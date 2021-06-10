@@ -28,12 +28,18 @@ db.votes = require("./vote.js")(sequelize, Sequelize);
 
 //Associations
 db.users.hasMany(db.posts);
+db.posts.belongsTo(db.users);
+
 db.users.hasMany(db.comments);
 db.posts.hasMany(db.comments);
-
 db.comments.belongsTo(db.posts);
 db.comments.belongsTo(db.users);
-db.posts.belongsTo(db.users);
+
+db.users.hasMany(db.votes);
+db.posts.hasMany(db.votes);
+db.votes.belongsTo(db.users);
+db.votes.belongsTo(db.posts);
+
 
 // //Inner join
 

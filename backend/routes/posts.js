@@ -3,6 +3,7 @@ module.exports = (app) => {
 
   let router = require("express").Router();
 
+  router.put("/:id/vote", Posts.userVote);
   router.post("/", Posts.create);
 
   router.get("/:id", Posts.findOne);

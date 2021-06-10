@@ -1,5 +1,5 @@
-const db = require("../models");
-const Comments = db.comments;
+const DB = require("../models");
+const COMMENTS = DB.comments;
 
 exports.create = (req, res) => {
   if (!req.body.comment) {
@@ -14,7 +14,7 @@ exports.create = (req, res) => {
   }
   if (!req.query.id) {
     return res.status(400).send({
-      message: "No id has been received !",
+      message: "Empty post id has been received !",
     });
   }
 
@@ -24,7 +24,7 @@ exports.create = (req, res) => {
     postId: req.query.id,
   };
 
-  Comments.create(comment)
+  COMMENTS.create(comment)
     .then((data) => {
       res.send(data);
     })
@@ -37,7 +37,7 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-  Comments.findAll()
+  COMMENTS.findAll()
     .then((data) => {
       res.send(data);
     })
@@ -51,7 +51,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Comments.findByPk(id)
+  COMMENTS.findByPk(id)
     .then((data) => {
       res.send(data);
     })
@@ -65,7 +65,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  Comments.update(req.body, {
+  COMMENTS.update(req.body, {
     where: { id },
   })
     .then((execute) => {
@@ -89,7 +89,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  Comments.destroy({
+  COMMENTS.destroy({
     where: { id },
   })
     .then((execute) => {
