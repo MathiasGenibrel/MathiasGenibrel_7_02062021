@@ -20,9 +20,9 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.posts = require("./post.js")(sequelize, Sequelize);
+db.posts = require("./posts.js")(sequelize, Sequelize);
 db.comments = require("./comment.js")(sequelize, Sequelize);
-db.users = require("./user.js")(sequelize, Sequelize);
+db.users = require("./users.js")(sequelize, Sequelize);
 db.votes = require("./vote.js")(sequelize, Sequelize);
 
 
@@ -33,11 +33,17 @@ db.posts.hasMany(db.comments);
 
 db.comments.belongsTo(db.posts);
 db.comments.belongsTo(db.users);
+db.posts.belongsTo(db.users);
+
+// //Inner join
+
+// const tryInner = db.comments.findAll({ include: db.posts });
+// console.log(JSON.stringify(tryInner, null, 2));
 
 //only for dev
 
-db.sequelize.sync({ force: true }).then(() => {
-  console.log("Drop and re-sync db.");
-});
+// db.sequelize.sync({ force: true }).then(() => {
+//   console.log("Drop and re-sync db.");
+// });
 
 module.exports = db;

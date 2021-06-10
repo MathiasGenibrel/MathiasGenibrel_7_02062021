@@ -1,5 +1,14 @@
 module.exports = (sequelize, Sequelize) => {
   const Post = sequelize.define("posts", {
+    id: {
+      primaryKey: true,
+      allowNull: false,
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4,
+      validate: {
+        notNull: true,
+      },
+    },
     text: {
       type: Sequelize.STRING,
     },
@@ -8,7 +17,7 @@ module.exports = (sequelize, Sequelize) => {
     },
     userId: {
       //foreignKey of posts table
-      type: Sequelize.INTEGER,
+      type: Sequelize.UUID,
       required: true,
       allowNull: false,
     },

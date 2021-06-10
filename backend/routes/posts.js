@@ -5,8 +5,8 @@ module.exports = (app) => {
 
   router.post("/", Posts.create);
 
-  router.get("/", Posts.findAll);
   router.get("/:id", Posts.findOne);
+  router.get("/", Posts.findAll);  
 
   router.put("/:id", Posts.update);
 

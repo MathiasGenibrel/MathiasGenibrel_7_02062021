@@ -15,3 +15,5 @@ SQL
 node_modules
 .env
 join_SQL.sql
+correctif.txt
+routesAPI.xlsx

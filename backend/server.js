@@ -4,10 +4,7 @@ const cors = require("cors");
 const app = express();
 app.use(express.json());
 
-require("./routes/posts")(app);
-require("./routes/comment")(app);
-require("./routes/user")(app);
-require("./routes/vote")(app);
+require("./routes/router")(app);
 
 require("dotenv").config();
 

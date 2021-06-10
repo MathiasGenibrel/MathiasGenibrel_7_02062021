@@ -1,12 +1,12 @@
 module.exports = (app) => {
   const Comments = require("../controllers/comment.js");
 
-  let router = require("express").Router();
+  const router = require("express").Router();
 
   router.post("/", Comments.create);
 
-  router.get("/", Comments.findAll);
   router.get("/:id", Comments.findOne);
+  router.get("/", Comments.findAll);
 
   router.put("/:id", Comments.update);
 

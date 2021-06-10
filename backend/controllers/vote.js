@@ -1,6 +1,5 @@
 const db = require("../models");
-const Vote = db.votes;
-const Op = db.Sequelize.Op;
+const Votes = db.votes;
 
 exports.create = (req, res) => {
   if (!req.body.vote) {
@@ -10,11 +9,11 @@ exports.create = (req, res) => {
     return;
   }
 
-  const votes = {
+  const vote = {
     vote: req.body.vote,
   };
 
-  Vote.create(votes)
+  Votes.create(vote)
     .then((data) => {
       res.send(data);
     })
@@ -29,7 +28,7 @@ exports.findAll = (req, res) => {
   const user = req.query.user;
   let condition = user ? { title: { [Op.like]: `%${user}%` } } : null;
 
-  Vote.findAll({ where: condition })
+  Votes.findAll({ where: condition })
     .then((data) => {
       res.send(data);
     })
@@ -43,7 +42,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Vote.findByPk(id)
+  Votes.findByPk(id)
     .then((data) => {
       res.send(data);
     })
@@ -57,7 +56,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  Vote.update(req.body, {
+  Votes.update(req.body, {
     where: { id: id },
   })
     .then((num) => {
@@ -81,7 +80,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  Vote.destroy({
+  Votes.destroy({
     where: { id: id },
   })
     .then((num) => {
