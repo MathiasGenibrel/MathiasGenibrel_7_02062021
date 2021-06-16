@@ -1,17 +1,20 @@
+const auth = require("../middleware/auth");
+
 module.exports = (app) => {
   const Posts = require("../controllers/posts.js");
 
-  let router = require("express").Router();
+  const router = require("express").Router();
 
-  router.put("/:id/vote", Posts.userVote);
-  router.post("/", Posts.create);
+  router.put("/:id/vote", auth, Posts.userVote);
+  router.post("/", auth, Posts.create);
 
-  router.get("/:id", Posts.findOne);
-  router.get("/", Posts.findAll);  
+  router.get("/user/:id", auth, Posts.findAllByUserId);
+  router.get("/:id", auth, Posts.findOne);
+  router.get("/", auth, Posts.findAll);  
 
-  router.put("/:id", Posts.update);
+  router.put("/:id", auth, Posts.update);
 
-  router.delete("/:id", Posts.delete);
+  router.delete("/:id", auth, Posts.delete);
 
   app.use("/api/posts", router);
 };

@@ -1,6 +1,19 @@
+const { Sequelize } = require("../models");
 const DB = require("../models");
 const POSTS = DB.posts;
 const VOTES = DB.votes;
+const Op = DB.Sequelize.Op;
+
+const countVote = (valueVote = "upVote", postId) => {
+  console.log(Sequelize.col("sdfsd"));
+  const numberVote = VOTES.count({
+    where: { vote: valueVote },
+  }).then((res) => {
+    return res;
+  });
+
+  return numberVote;
+};
 
 exports.create = (req, res) => {
   if (!req.body.text && !req.body.img_url) {
@@ -76,7 +89,7 @@ exports.userVote = (req, res) => {
     });
 };
 
-exports.findAll = (req, res) => {
+exports.findAll = async (req, res) => {
   const orderPost = req.query.order ?? "DESC";
   const offsetPost = Number(req.query.offset) ? Number(req.query.offset) : 0;
   const limitPost = Number(req.query.limit) ? Number(req.query.limit) : 5;
@@ -106,10 +119,27 @@ exports.findAll = (req, res) => {
       },
       { model: DB.users, attributes: ["name", "description", "role"] },
       {
-        model: DB.votes,
-        attributes: ["vote"],
+        model: VOTES,
+        required: false,
+        nest: true,
         include: [
-          { model: DB.users, attributes: ["name", "description", "role"] },
+          { 
+            model: DB.users,
+            attributes: ["name"]
+          },
+        ],
+        attributes: [
+          "vote",
+          "userId",
+          // [Sequelize.literal(await countVote("upVote")), "upVote"],
+          // [Sequelize.fn("COUNT", Sequelize.col("downVote")),"downtestVote"] ?? [Sequelize.literal("0"),"downtestVote"],
+
+          // [Sequelize.where(Sequelize.fn("COUNT", Sequelize.col("downVote")),{[Op.ne]: true}),"Vottte"],
+
+          // [Sequelize.fn("COUNT" ,Sequelize.where({where: {vote: "upVote"}})),"upppVote"],
+          // [Sequelize.fn("COUNT" ,Sequelize.literal("upVote"),"upVote"),"vote"],
+          // [Sequelize.literal(Sequelize.fn("COUNT", Sequelize.where({vote: "downVote"}))), "downVote"],
+          // [Sequelize.literal(await countVote("upVote", "coucou")), "upVote"],
         ],
       },
     ],
@@ -120,6 +150,27 @@ exports.findAll = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message: err.message || "Some error occurred while retrieving post.",
+      });
+    });
+};
+
+exports.findAllByUserId = (req, res) => {
+  const offsetPost = Number(req.query.offset) ? Number(req.query.offset) : 0;
+  const limitPost = Number(req.query.limit) ? Number(req.query.limit) : 5;
+
+  POSTS.findAll({
+    where: {userId: req.params.id},
+    order: [["createdAt", "DESC"]],
+    offset: offsetPost,
+    limit: limitPost,
+    attributes: { exclude: ["userId"] },
+  })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err,
       });
     });
 };
