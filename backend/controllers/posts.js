@@ -1,19 +1,7 @@
-const { Sequelize } = require("../models");
+const getIdUser = require("../utils/decodeToken");
 const DB = require("../models");
 const POSTS = DB.posts;
 const VOTES = DB.votes;
-const Op = DB.Sequelize.Op;
-
-const countVote = (valueVote = "upVote", postId) => {
-  console.log(Sequelize.col("sdfsd"));
-  const numberVote = VOTES.count({
-    where: { vote: valueVote },
-  }).then((res) => {
-    return res;
-  });
-
-  return numberVote;
-};
 
 exports.create = (req, res) => {
   if (!req.body.text && !req.body.img_url) {
@@ -22,7 +10,7 @@ exports.create = (req, res) => {
     });
     return;
   }
-  if (!req.body.userId) {
+  if (!getIdUser(req)) {
     res.status(400).send({
       message: "userId cannot be empty",
     });
@@ -32,7 +20,7 @@ exports.create = (req, res) => {
   const post = {
     text: req.body.text,
     imgUrl: req.body.imgUrl,
-    userId: req.body.userId,
+    userId: getIdUser(req),
   };
 
   POSTS.create(post)
@@ -48,7 +36,7 @@ exports.create = (req, res) => {
 
 exports.userVote = (req, res) => {
   const votePost = req.body.vote;
-  const userId = req.body.userId;
+  const userId = getIdUser(req);
   const postId = req.params.id;
   const vote = {
     vote: votePost,
@@ -106,6 +94,7 @@ exports.findAll = async (req, res) => {
     offset: offsetPost,
     limit: limitPost,
     include: [
+      { model: DB.users, attributes: ["name", "description", "role"] },
       {
         model: DB.comments,
         attributes: ["id", "comment", "createdAt", "updatedAt", "userId"],
@@ -117,30 +106,17 @@ exports.findAll = async (req, res) => {
           },
         ],
       },
-      { model: DB.users, attributes: ["name", "description", "role"] },
       {
         model: VOTES,
         required: false,
         nest: true,
         include: [
-          { 
+          {
             model: DB.users,
-            attributes: ["name"]
+            attributes: ["name"],
           },
         ],
-        attributes: [
-          "vote",
-          "userId",
-          // [Sequelize.literal(await countVote("upVote")), "upVote"],
-          // [Sequelize.fn("COUNT", Sequelize.col("downVote")),"downtestVote"] ?? [Sequelize.literal("0"),"downtestVote"],
-
-          // [Sequelize.where(Sequelize.fn("COUNT", Sequelize.col("downVote")),{[Op.ne]: true}),"Vottte"],
-
-          // [Sequelize.fn("COUNT" ,Sequelize.where({where: {vote: "upVote"}})),"upppVote"],
-          // [Sequelize.fn("COUNT" ,Sequelize.literal("upVote"),"upVote"),"vote"],
-          // [Sequelize.literal(Sequelize.fn("COUNT", Sequelize.where({vote: "downVote"}))), "downVote"],
-          // [Sequelize.literal(await countVote("upVote", "coucou")), "upVote"],
-        ],
+        attributes: ["vote", "userId"],
       },
     ],
   })
@@ -159,7 +135,7 @@ exports.findAllByUserId = (req, res) => {
   const limitPost = Number(req.query.limit) ? Number(req.query.limit) : 5;
 
   POSTS.findAll({
-    where: {userId: req.params.id},
+    where: { userId: req.params.id },
     order: [["createdAt", "DESC"]],
     offset: offsetPost,
     limit: limitPost,
@@ -231,6 +207,31 @@ exports.delete = (req, res) => {
   const id = req.params.id;
 
   POSTS.destroy({
+    where: { id, userId: getIdUser(req) },
+  })
+    .then((execute) => {
+      if (execute == 1) {
+        return res.send({
+          message: "Post was deleted successfully!",
+        });
+      }
+
+      res.status(400).send({
+        message: `Cannot delete post with id=${id}. Maybe post was not found! Or the post does not belong to the user`,
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Could not delete post with id=" + id,
+      });
+    });
+};
+
+exports.adminDelete = (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+
+  POSTS.destroy({
     where: { id },
   })
     .then((execute) => {
@@ -240,7 +241,7 @@ exports.delete = (req, res) => {
         });
       }
 
-      res.send({
+      res.status(404).send({
         message: `Cannot delete post with id=${id}. Maybe post was not found!`,
       });
     })

@@ -1,4 +1,5 @@
 const auth = require("../middleware/auth");
+const admin = require("../middleware/isAdmin");
 
 module.exports = (app) => {
   const users = require("../controllers/users.js");
@@ -14,6 +15,7 @@ module.exports = (app) => {
 
   router.put("/:id", auth, users.update);
 
+  router.delete("/admin/:id", auth, admin, users.delete);
   router.delete("/:id", auth, users.delete);
 
   app.use("/api/users", router);

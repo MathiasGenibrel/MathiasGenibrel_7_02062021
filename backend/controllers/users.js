@@ -1,3 +1,4 @@
+const getIdUser = require("../utils/decodeToken");
 const db = require("../models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -34,12 +35,15 @@ exports.login = (req, res) => {
       bcrypt
         .compare(req.body.password, user.password)
         .then((valid) => {
-          if (!valid) return res.status(401).send({ message: "Incorrect password !" });
+          if (!valid)
+            return res.status(401).send({ message: "Incorrect password !" });
 
           res.status(200).send({
             userId: user.id,
             message: "Connection successful",
-            token: jwt.sign({ userId: user.id }, process.env.TOKEN_USER, { expiresIn: "24h" }),
+            token: jwt.sign({ userId: user.id }, process.env.TOKEN_USER, {
+              expiresIn: "24h",
+            }),
           });
         })
         .catch((err) =>
@@ -94,7 +98,7 @@ exports.update = (req, res) => {
   const id = req.params.id;
 
   Users.update(req.body, {
-    where: { id },
+    where: { id, userId: getIdUser(req) },
   })
     .then((execute) => {
       if (execute == 1) {
@@ -115,6 +119,30 @@ exports.update = (req, res) => {
 };
 
 exports.delete = (req, res) => {
+  const id = req.params.id;
+
+  Users.destroy({
+    where: { id, userId: getIdUser(req) },
+  })
+    .then((execute) => {
+      if (execute == 1) {
+        return res.send({
+          message: "User was deleted successfully!",
+        });
+      }
+
+      res.send({
+        message: `Cannot delete user with id=${id}. Maybe user was not found! Or the user does not belong to the user`,
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Could not delete user with id=" + id,
+      });
+    });
+};
+
+exports.adminDelete = (req, res) => {
   const id = req.params.id;
 
   Users.destroy({

@@ -1,3 +1,4 @@
+const getIdUser = require("../utils/decodeToken");
 const DB = require("../models");
 const COMMENTS = DB.comments;
 
@@ -20,7 +21,7 @@ exports.create = (req, res) => {
 
   const comment = {
     comment: req.body.comment,
-    userId: req.body.userId,
+    userId: getIdUser(req),
     postId: req.query.id,
   };
 
@@ -40,7 +41,7 @@ exports.update = (req, res) => {
   const id = req.params.id;
 
   COMMENTS.update(req.body, {
-    where: { id },
+    where: { id, userId: getIdUser(req) },
   })
     .then((execute) => {
       if (execute == 1) {
@@ -64,6 +65,30 @@ exports.delete = (req, res) => {
   const id = req.params.id;
 
   COMMENTS.destroy({
+    where: { id, userId: getIdUser(req) },
+  })
+    .then((execute) => {
+      if (execute == 1) {
+        return res.send({
+          message: "Comment was deleted successfully!",
+        });
+      }
+
+      res.status(400).send({
+        message: `Cannot delete comment with id=${id}. Maybe comment was not found! Or the comment does not belong to the user`,
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Could not delete comment with id=" + id,
+      });
+    });
+};
+
+exports.adminDelete = (req, res) => {
+  const id = req.params.id;
+
+  COMMENTS.destroy({
     where: { id },
   })
     .then((execute) => {
@@ -73,7 +98,7 @@ exports.delete = (req, res) => {
         });
       }
 
-      res.send({
+      res.status(404).send({
         message: `Cannot delete comment with id=${id}. Maybe comment was not found!`,
       });
     })

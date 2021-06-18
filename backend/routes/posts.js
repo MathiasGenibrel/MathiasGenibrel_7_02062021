@@ -1,4 +1,5 @@
 const auth = require("../middleware/auth");
+const admin = require("../middleware/isAdmin");
 
 module.exports = (app) => {
   const Posts = require("../controllers/posts.js");
@@ -13,7 +14,8 @@ module.exports = (app) => {
   router.get("/", auth, Posts.findAll);  
 
   router.put("/:id", auth, Posts.update);
-
+  
+  router.delete("/admin/:id", auth, admin, Posts.adminDelete);
   router.delete("/:id", auth, Posts.delete);
 
   app.use("/api/posts", router);
