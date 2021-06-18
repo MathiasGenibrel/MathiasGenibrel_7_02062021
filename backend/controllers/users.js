@@ -62,6 +62,7 @@ exports.login = (req, res) => {
 
 exports.findAll = (req, res) => {
   Users.findAll({
+    order: [["createdAt", "DESC"]],
     attributes: {
       exclude: ["password"],
     },

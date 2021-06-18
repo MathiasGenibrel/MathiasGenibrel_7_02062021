@@ -1,16 +1,17 @@
 const jwt = require("jsonwebtoken");
+const getUserIDByToken = require("../utils/decodeToken");
 
 module.exports = (req, res, next) => {
+  const userId = req.body.userId;
+  
   try {
-    const token = req.headers.authorization.split(" ")[1];
-    const decodedToken = jwt.verify(token, process.env.TOKEN_USER);
-    const userId = decodedToken.userId;
+    if (!userId) throw "UserId in req.body cannot be empty";
+    if (userId && userId !== getUserIDByToken(req)) throw "Invalid user ID";
 
-    if (req.body.userId && req.body.userId !== userId) throw "Invalid user ID";
     next();
   } catch (err) {
     res.status(401).send({
-      message: err || "Invalid request"
+      message: err || "Token invalid",
     });
   }
 };
