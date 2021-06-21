@@ -2,7 +2,7 @@ import React from "react";
 
 const Logo = (props) => {
   return (
-    <div style={{ position: "relative" }}>
+    <div className="sign__logo">
       <svg
         height={props.height}
         data-v-1084b650=""
@@ -25,16 +25,7 @@ const Logo = (props) => {
           </svg>
         </g>
       </svg>
-      <h1
-        style={{
-          position: "absolute",
-          bottom: "0",
-          fontSize: "1.3rem",
-          fontWeight: "700",
-        }}
-      >
-        {props.name}
-      </h1>
+      <h1 className="sign__logo__title">{props.name}</h1>
     </div>
   );
 };

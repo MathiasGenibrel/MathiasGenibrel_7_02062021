@@ -1,9 +1,5 @@
 @import url("./reset.css");
-
-:root {
-  --primary-color: #F4F4F4;
-  --second-color: #FF9233;
-}
+@import url("./styles/variables.css");
 
 body {
   margin: 0;
@@ -34,17 +30,4 @@ code {
   right: 0;
   position: absolute;
   z-index: -1;  
-}
-.App__box-sign {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  height: 510px;
-  width: 300px;
-  border: 1.5px solid #011827;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
-  border-radius: 25px;
-  background-color: var(--second-color);
-  padding-bottom: 1rem;
 }

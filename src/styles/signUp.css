@@ -1,0 +1,61 @@
+@import url(./variables.css);
+
+.sign {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  height: 510px;
+  width: 300px;
+  border: 1.5px solid #011827;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
+  border-radius: 25px;
+  background-color: var(--second-color);
+  padding-bottom: 1rem;
+}
+
+.sign__logo {
+  position: relative;
+}
+.sign__logo__title {
+  position: absolute;
+  bottom: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.sign__input {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 11.5rem;
+}
+
+.sign__input__title {
+  color: #f4f4f4;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: left;
+  margin: 0 0 0.3rem 0.5rem;
+}
+
+.sign__input__user {
+  background: rgba(1, 24, 39, 0.95);
+  text-align: center;
+  color: #f4f4f4;
+  height: 60px;
+  width: 260px;
+  border-radius: 15px;
+  box-shadow: 4px 4px 8px rgba(1, 24, 39, 0.35),
+    inset 5px 4px 4px rgba(255, 146, 51, 0.15);
+}
+
+.sign__button {
+  height: 50px;
+  width: 175px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border-radius: 15px;
+  box-shadow: 4px 4px 8px rgba(1, 24, 39, 0.35),
+    inset 5px 4px 4px rgba(255, 146, 51, 0.15);
+}
