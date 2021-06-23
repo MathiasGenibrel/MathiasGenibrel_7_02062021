@@ -34,7 +34,7 @@ exports.create = (req, res) => {
     });
 };
 
-exports.userVote = (req, res) => {
+exports.userVote = async (req, res) => {
   const votePost = req.body.vote;
   const userId = getIdUser(req);
   const postId = req.params.id;
@@ -50,7 +50,37 @@ exports.userVote = (req, res) => {
     });
   }
 
-  VOTES.update(req.body, {
+  const valueVote = async () => {
+    const numberVote = {
+      upVote: await VOTES.count({ where: { postId, vote: "upVote" } }),
+      downVote: await VOTES.count({ where: { postId, vote: "downVote" } }),
+    };
+
+    return numberVote;
+  };
+
+  const updatePostVote = async () => {
+    await POSTS.update(await valueVote(), {
+      where: { id: postId },
+    })
+      .then((execute) => {
+        if (execute == 1) {
+          return res.send({
+            message: "Post was updated successfully.",
+          });
+        }
+        return res.status(404).send({
+          message: "Post not found.",
+        });
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: err || "Some error occurred while creating the vote.",
+        });
+      });
+  };
+
+  await VOTES.update(req.body, {
     where: { userId, postId },
   })
     .then((execute) => {
@@ -61,6 +91,7 @@ exports.userVote = (req, res) => {
       }
       VOTES.create(vote)
         .then((data) => {
+          updatePostVote();
           res.send(data);
         })
         .catch((err) => {
@@ -75,6 +106,8 @@ exports.userVote = (req, res) => {
         message: err || "Some error occurred while creating the vote.",
       });
     });
+
+  updatePostVote();
 };
 
 exports.findAll = async (req, res) => {
@@ -109,6 +142,7 @@ exports.findAll = async (req, res) => {
       {
         model: VOTES,
         required: false,
+        limit: 5,
         nest: true,
         include: [
           {

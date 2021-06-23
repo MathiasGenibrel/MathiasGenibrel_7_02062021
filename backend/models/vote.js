@@ -14,14 +14,6 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
       defaultValue: "none",
     },
-    downVote: {
-      type: Sequelize.BOOLEAN,
-      defaultValue: false,
-    },
-    upVote: {
-      type: Sequelize.BOOLEAN,
-      defaultValue: false,
-    },
     postId: {
       //foreignKey of posts table
       type: Sequelize.UUID,

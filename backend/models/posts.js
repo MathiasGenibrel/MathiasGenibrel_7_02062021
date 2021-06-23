@@ -9,6 +9,14 @@ module.exports = (sequelize, Sequelize) => {
         notNull: true,
       },
     },
+    upVote: {
+      type: Sequelize.INTEGER,
+      defaultValue: 0,
+    },
+    downVote: {
+      type: Sequelize.INTEGER,
+      defaultValue: 0,
+    },
     text: {
       type: Sequelize.STRING,
     },
