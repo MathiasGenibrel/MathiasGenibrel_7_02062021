@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 
-const Button = ({ reverse = false, text }) => {
+const Button = ({ reverse = false, text, userClick = "" }) => {
   const color = reverse ? "var(--third-color)" : "var(--primary-color)";
   const backgroundColor = reverse
     ? "var(--primary-color)"
@@ -10,6 +10,7 @@ const Button = ({ reverse = false, text }) => {
     <Fragment>
       <button
         className="sign__button"
+        onClick={userClick}
         style={{
           backgroundColor: backgroundColor,
           color: color,

@@ -2,24 +2,32 @@
 
 .sign {
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  height: 510px;
+  padding: calc(var(--spacing) * .5) 0 calc(var(--spacing) * 1.5) 0;
   width: 300px;
   border: 1.5px solid #011827;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
   background-color: var(--second-color);
-  padding-bottom: 1rem;
+}
+
+.sign__back {
+  position: absolute;
+  font-size: 1.8rem;
+  left: 1.5rem;
+  top: 1.5rem;
 }
 
 .sign__logo {
   position: relative;
+  padding: 0 0 calc(var(--spacing) / 2) 0;
 }
 .sign__logo__title {
   position: absolute;
-  bottom: 0;
+  bottom: 0.5rem;
   font-size: 1.3rem;
   font-weight: 700;
 }
@@ -28,7 +36,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 11.5rem;
 }
 
 .sign__input__title {
@@ -37,6 +44,7 @@
   font-weight: 500;
   text-align: left;
   margin: 0 0 0.3rem 0.5rem;
+  margin-top: calc(var(--spacing) * 1);
 }
 
 .sign__input__user {
@@ -56,6 +64,11 @@
   font-size: 1.2rem;
   font-weight: 700;
   border-radius: 15px;
+  margin-top: calc(var(--spacing) * 1.5);
   box-shadow: 4px 4px 8px rgba(1, 24, 39, 0.35),
     inset 5px 4px 4px rgba(255, 146, 51, 0.15);
+}
+
+.sign__button:active {
+  transform: scale(.98);
 }
