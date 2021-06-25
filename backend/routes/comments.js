@@ -1,5 +1,6 @@
 const auth = require("../middleware/auth");
 const admin = require("../middleware/isAdmin");
+const cors = require("cors");
 
 module.exports = (app) => {
   const Comments = require("../controllers/comment.js");
@@ -13,5 +14,5 @@ module.exports = (app) => {
   router.delete("/admin/:id", auth, admin, Comments.adminDelete);
   router.delete("/:id", auth, Comments.delete);
 
-  app.use("/api/comments", router);
+  app.use("/api/comments", cors(), router);
 };

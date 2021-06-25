@@ -1,5 +1,6 @@
 const auth = require("../middleware/auth");
 const admin = require("../middleware/isAdmin");
+const cors = require("cors");
 
 module.exports = (app) => {
   const Posts = require("../controllers/posts.js");
@@ -11,12 +12,12 @@ module.exports = (app) => {
 
   router.get("/user/:id", auth, Posts.findAllByUserId);
   router.get("/:id", auth, Posts.findOne);
-  router.get("/", auth, Posts.findAll);  
+  router.get("/", auth, Posts.findAll);
 
   router.put("/:id", auth, Posts.update);
-  
+
   router.delete("/admin/:id", auth, admin, Posts.adminDelete);
   router.delete("/:id", auth, Posts.delete);
 
-  app.use("/api/posts", router);
+  app.use("/api/posts", cors(), router);
 };

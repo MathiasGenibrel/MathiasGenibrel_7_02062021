@@ -2,23 +2,19 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 require("./routes/router")(app);
 
 require("dotenv").config();
 
-let corsOption = {
-  origin: "http://localhost:8081",
-};
-
-app.use(cors(corsOption));
+app.use(cors());
 
 const db = require("./models");
 db.sequelize.sync();
 
-app.get("/", (req, res) => {
+app.get("/", cors(), (req, res) => {
   res.json({ message: "Simple response of API" });
 });
 
