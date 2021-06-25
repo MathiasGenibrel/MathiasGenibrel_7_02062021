@@ -1,9 +1,13 @@
-import React, {Fragment} from 'react'
+import { useHistory } from "react-router-dom";
+import React from 'react'
 
 export default function Back({name, switchMenu}) {
+
+  let history = useHistory();
+
   return (
-    <Fragment>
-      <i className={`${name} fas fa-chevron-left`} onClick={switchMenu} ></i>
-    </Fragment>
+    <>
+      <i className={`${name} fas fa-chevron-left`} onClick={history.goBack} ></i>
+    </>
   )
 }

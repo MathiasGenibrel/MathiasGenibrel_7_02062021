@@ -1,10 +1,22 @@
 import React from "react";
+import styled from "styled-components";
 
-const Logo = (props) => {
+const LogoSvg = styled.div`
+  position: relative;
+  padding: 0 0 calc(var(--spacing) / 2) 0;
+`
+const LogoTitle = styled.h1`
+  position: absolute;
+  bottom: 0.5rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+`
+
+const Logo = ({height = "80px", color = "#F4F4F4"}) => {
   return (
-    <div className="sign__logo">
+    <LogoSvg>
       <svg
-        height={props.height}
+        height={height}
         data-v-1084b650=""
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 300 300"
@@ -12,7 +24,7 @@ const Logo = (props) => {
         <g
           data-v-1084b650=""
           id="640fb903-7c97-3a8b-d0a7-369102908d0a"
-          fill={props.color}
+          fill={color}
           stroke="none"
           transform="matrix(0.8499999999999999,0,0,0.8499999999999999,22.500006484985377,22.50005836486818)"
         >
@@ -25,8 +37,8 @@ const Logo = (props) => {
           </svg>
         </g>
       </svg>
-      <h1 className="sign__logo__title">{props.name}</h1>
-    </div>
+      <LogoTitle style={color={color}}>GROUPOMANIA</LogoTitle>
+    </LogoSvg>
   );
 };
 
