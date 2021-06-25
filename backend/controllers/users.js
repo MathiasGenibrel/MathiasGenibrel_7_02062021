@@ -5,16 +5,16 @@ const jwt = require("jsonwebtoken");
 const Users = db.users;
 
 exports.create = (req, res) => {
-  if (!req.body.name || !req.body.password) {
+  if (!req.body.user.name || !req.body.user.password) {
     return res.status(400).send({
       message: "Content can not be empty!",
     });
   }
 
   const user = {
-    name: req.body.name,
-    password: req.body.password,
-    desc: req.body.desc,
+    name: req.body.user.name,
+    password: req.body.user.password,
+    desc: req.body.user.desc,
   };
 
   Users.create(user)
@@ -29,11 +29,11 @@ exports.create = (req, res) => {
 };
 
 exports.login = (req, res) => {
-  Users.findOne({ where: { name: req.body.name } })
+  Users.findOne({ where: { name: req.body.user.name } })
     .then((user) => {
       if (!user) return res.status(401).send({ message: "User not found !" });
       bcrypt
-        .compare(req.body.password, user.password)
+        .compare(req.body.user.password, user.password)
         .then((valid) => {
           if (!valid)
             return res.status(401).send({ message: "Incorrect password !" });
