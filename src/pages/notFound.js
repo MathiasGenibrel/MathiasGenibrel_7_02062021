@@ -1,6 +1,6 @@
 import LogoSvg from "../components/Logo";
 
-const notFound = () => {
+const NotFound = () => {
   return (
     <>
       <LogoSvg height="400px" color="#333" />
@@ -9,4 +9,4 @@ const notFound = () => {
   );
 };
 
-export default notFound;
+export default NotFound;

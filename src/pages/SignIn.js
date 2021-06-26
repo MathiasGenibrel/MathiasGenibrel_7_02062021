@@ -1,8 +1,9 @@
 import InputWithLabel from "../components/Input";
 import Button from "../components/Button";
 import LogoSvg from "../components/Logo";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
+import { LoggingIn } from "../js/Auth";
 
 const SignContent = styled.div`
   display: flex;
@@ -18,30 +19,32 @@ const SignContent = styled.div`
   background-color: var(--second-color);
 `;
 
-const SignUpLink = styled.span `
+const SignUpLink = styled.span`
   color: var(--primary-color);
   text-decoration: none;
   font-weight: 500;
   font-size: 1.3rem;
-`
+`;
 
 const SignIn = () => {
+  const { slug } = useParams();
+
   return (
     <SignContent>
-      <LogoSvg height="150px" color="#F4F4F4" />
+      <LogoSvg height="150px"/>
       <div>
         <InputWithLabel
           label="userName"
           text="Nom d'utilisateur"
         ></InputWithLabel>
         <InputWithLabel
-          label="paswword"
+          label="password"
           text="Mot de passe"
           type="password"
         ></InputWithLabel>
       </div>
-      <Button text="Se connecter" />
-      <Link to="/SignUp" style={{marginTop: "1rem"}}>
+      <Button onClick={() => LoggingIn(slug)} text="Se connecter" />
+      <Link to="/auth/SignUp" style={{ marginTop: "1rem" }}>
         <SignUpLink>S'inscrire</SignUpLink>
       </Link>
     </SignContent>

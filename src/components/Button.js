@@ -15,7 +15,7 @@ const StyledButton = styled.button`
   } 
 `;
 
-const Button = ({ reverse = false, text }) => {
+const Button = ({ reverse = false, text, onClick }) => {
   const color = reverse ? "var(--third-color)" : "var(--primary-color)";
   const backgroundColor = reverse
     ? "var(--primary-color)"
@@ -25,6 +25,7 @@ const Button = ({ reverse = false, text }) => {
     <>
       <StyledButton
         className="sign__button"
+        onClick={onClick}
         style={{
           backgroundColor: backgroundColor,
           color: color,
