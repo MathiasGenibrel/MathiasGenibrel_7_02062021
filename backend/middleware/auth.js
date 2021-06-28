@@ -3,9 +3,11 @@ const getUserIDByToken = require("../utils/decodeToken");
 
 module.exports = (req, res, next) => {
   const userId = req.body.userId;
+  const authorization = req.headers.authorization;
+  console.log(authorization)
   
   try {
-    if (!userId) throw "UserId in req.body cannot be empty";
+    if (!authorization) throw "No user logged in";
     if (userId && userId !== getUserIDByToken(req)) throw "Invalid user ID";
 
     next();
