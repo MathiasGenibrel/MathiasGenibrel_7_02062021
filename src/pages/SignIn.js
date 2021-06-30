@@ -1,7 +1,7 @@
 import InputWithLabel from "../components/Input";
 import Button from "../components/Button";
 import LogoSvg from "../components/Logo";
-import { Link, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { LoggingIn } from "../js/Auth";
 
@@ -28,10 +28,16 @@ const SignUpLink = styled.span`
 
 const SignIn = () => {
   const { slug } = useParams();
+  const redirect = useHistory();
+
+  const handleClick = async () => {
+    const userLogin = await LoggingIn(slug);
+    if (userLogin) redirect.push("/main");
+  }
 
   return (
     <SignContent>
-      <LogoSvg height="150px"/>
+      <LogoSvg height="150px" />
       <div>
         <InputWithLabel
           label="userName"
@@ -43,7 +49,7 @@ const SignIn = () => {
           type="password"
         ></InputWithLabel>
       </div>
-      <Button onClick={() => LoggingIn(slug)} text="Se connecter" />
+      <Button onClick={handleClick} text="Se connecter" />
       <Link to="/auth/SignUp" style={{ marginTop: "1rem" }}>
         <SignUpLink>S'inscrire</SignUpLink>
       </Link>
