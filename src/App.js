@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NotFound from "./pages/NotFound";
+import Landing from "./pages/Landing";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import React from "react";
@@ -13,10 +14,11 @@ const App = () => {
             path="/auth/:slug"
             render={({ match }) => {
               if (match.params.slug.toLowerCase() === "signin") return <SignIn/>
-              if (match.params.slug === "SignUp") return <SignUp/>
+              if (match.params.slug.toLowerCase() === "signup") return <SignUp/>
               return <NotFound/>
             }}
           />
+          <Route path="/main" component={Landing} />
           <Route path="/" component={NotFound} />
         </Switch>
       </Router>
