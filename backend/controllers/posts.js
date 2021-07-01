@@ -174,6 +174,7 @@ exports.findAllByUserId = (req, res) => {
     offset: offsetPost,
     limit: limitPost,
     attributes: { exclude: ["userId"] },
+    include: [{ model: DB.users, attributes: ["name", "description", "role"] }],
   })
     .then((data) => {
       res.send(data);
