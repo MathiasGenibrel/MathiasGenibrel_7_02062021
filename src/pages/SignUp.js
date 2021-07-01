@@ -3,7 +3,7 @@ import Button from "../components/Button";
 import LogoSvg from "../components/Logo";
 import Back from "../components/Back";
 import styled from "styled-components";
-import { LoggingIn } from "../js/Auth";
+import { LoggingIn } from "../utils/Auth";
 import { useParams } from "react-router-dom";
 
 const SignContent = styled.div`

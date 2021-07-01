@@ -4,8 +4,9 @@ import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import Back from "../components/Back";
 import DeleteLogo from "../components/DeleteLogo";
-import { getInfo } from "../js/CallApi";
 import PostContent from "../components/PostContent";
+import { ROUTES, fetcher } from "../utils/Api";
+import { getCookie } from "../utils/Cookie";
 
 const NavUser = styled.div`
   display: flex;
@@ -42,18 +43,18 @@ const UserIconPosition = styled.div`
 
 const UserProfile = () => {
   const userInfo = useLocation().state.user;
-  const [postUser, setPostUser] = useState([]);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    getInfo(`posts/user/${userInfo.id}`)
+    fetcher(`${ROUTES.post}/user/${userInfo.id}`, {
+      method: "GET",
+      headers: { authorization: `Bearer ${getCookie("userId")}` },
+    })
       .then((res) => res.json())
       .then((result) => {
-        setPostUser(result);
+        setPosts(result);
       });
   }, []);
-
-  console.log(userInfo);
-  console.log(postUser)
 
   return (
     <NavUser>
@@ -83,9 +84,9 @@ const UserProfile = () => {
           Post récent
         </p>
       </UserInfo>
-      {postUser.map((element, index) => {
-        return <PostContent key={index} post={element} />;
-      })}
+      {posts.map((post) => (
+        <PostContent key={post.id} post={post} />
+      ))}
     </NavUser>
   );
 };

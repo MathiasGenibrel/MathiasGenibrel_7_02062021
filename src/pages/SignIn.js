@@ -3,7 +3,8 @@ import Button from "../components/Button";
 import LogoSvg from "../components/Logo";
 import { Link, useHistory, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { LoggingIn } from "../js/Auth";
+import { LoggingIn } from "../utils/Auth";
+import React, { useState } from "react";
 
 const SignContent = styled.div`
   display: flex;
@@ -33,19 +34,34 @@ const SignIn = () => {
   const redirect = useHistory();
 
   const handleClick = async () => {
-    const userLogin = await LoggingIn(slug);
+    const userLogin = await LoggingIn(slug, username, password);
     if (userLogin) redirect.push("/main");
-  }
+  };
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
 
   return (
     <SignContent>
       <LogoSvg height="150px" />
       <div>
         <InputWithLabel
+          value={username}
+          onChange={handleUsernameChange}
           label="userName"
           text="Nom d'utilisateur"
         ></InputWithLabel>
         <InputWithLabel
+          value={password}
+          onChange={handlePasswordChange}
           label="password"
           text="Mot de passe"
           type="password"

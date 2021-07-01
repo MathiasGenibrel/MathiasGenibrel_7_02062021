@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const InputText = styled.label`
@@ -25,20 +25,14 @@ const InputContent = styled.div`
   flex-direction: column;
 `;
 
-const Input = ({ label, type, initialValue = "" }) => {
-  const [value, setState] = useState(initialValue);
-
-  const handleChange = (e) => {
-    setState(e.target.value);
-  };
-
+const Input = ({ label, type, value, onChange }) => {
   return (
     <InputUser
       name={label}
       id={label}
       type={type}
-      onChange={handleChange}
       value={value}
+      onChange={onChange}
     />
   );
 };
@@ -52,11 +46,22 @@ const WithLabel = (component) => {
   );
 };
 
-const InputWithLabel = ({ label = "input", type = "text", text }) => {
+const InputWithLabel = ({
+  label = "input",
+  type = "text",
+  text,
+  value,
+  onChange,
+}) => {
   return (
     <InputContent>
       <WithLabel label={label} text={text}>
-        <Input label={label} type={type}></Input>
+        <Input
+          label={label}
+          type={type}
+          value={value}
+          onChange={onChange}
+        ></Input>
       </WithLabel>
     </InputContent>
   );

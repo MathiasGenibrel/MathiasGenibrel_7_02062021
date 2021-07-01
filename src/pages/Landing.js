@@ -1,12 +1,12 @@
 import PostContent from "../components/PostContent";
-import { authentification } from "../js/Cookie";
+import { getCookie } from "../utils/Cookie";
 import UserImage from "../components/UserImg";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { getInfo } from "../js/CallApi";
 import styled from "styled-components";
-import { SignOut } from "../js/Auth";
+import { SignOut } from "../utils/Auth";
 import { useEffect } from "react";
+import { ROUTES, fetcher } from "../utils/Api";
 
 const NavContent = styled.nav`
   background-color: var(--third-color);
@@ -20,6 +20,7 @@ const NavContent = styled.nav`
   z-index: 2;
   top: 0;
 `;
+
 const Content = styled.div`
   display: flex;
   padding: 4.2rem 0;
@@ -32,7 +33,10 @@ const Landing = () => {
   const [allPost, setAllPost] = useState([]);
 
   useEffect(() => {
-    getInfo()
+    fetcher(ROUTES.post, {
+      method: "GET",
+      headers: { authorization: `Bearer ${getCookie("BearerToken")}` },
+    })
       .then((res) => res.json())
       .then((result) => {
         setAllPost(result);
@@ -40,9 +44,13 @@ const Landing = () => {
   }, []);
 
   useEffect(() => {
-    getInfo(`users/${authentification("userId")}`)
+    fetcher(ROUTES.user, {
+      method: "GET",
+      headers: { authorization: `Bearer ${getCookie("userId")}` },
+    })
       .then((res) => res.json())
       .then((result) => {
+        console.log(result)
         setUser(result);
       });
   }, []);
