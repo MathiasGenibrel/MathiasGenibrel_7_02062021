@@ -39,7 +39,7 @@
 }
 
 .sign__input__title {
-  color: #f4f4f4;
+  color: var(--primary-color);
   font-size: 0.9rem;
   font-weight: 500;
   text-align: left;
@@ -50,7 +50,7 @@
 .sign__input__user {
   background: rgba(1, 24, 39, 0.95);
   text-align: center;
-  color: #f4f4f4;
+  color: var(--primary-color);
   height: 60px;
   width: 260px;
   border-radius: 15px;

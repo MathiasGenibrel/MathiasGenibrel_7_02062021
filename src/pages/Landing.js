@@ -1,25 +1,24 @@
-import styled from "styled-components";
+import PostContent from "../components/PostContent";
+import { authentification } from "../js/Cookie";
+import UserImage from "../components/UserImg";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { getInfo } from "../js/CallApi";
-import { authentification } from "../js/Cookie";
-import { useEffect } from "react";
-import PostContent from "../components/PostContent";
-import UserImage from "../components/UserImg";
+import styled from "styled-components";
 import { SignOut } from "../js/Auth";
-import background from "../assets/img/Background_texture.jpg"
+import { useEffect } from "react";
 
 const NavContent = styled.nav`
-  display: flex;
+  background-color: var(--third-color);
+  color: var(--primary-color);
   justify-content: space-around;
   align-items: center;
   position: fixed;
-  z-index: 2;
-  background-color: var(--third-color);
-  color: var(--primary-color);
-  top: 0;
-  width: 100%;
   height: 4.4rem;
+  display: flex;
+  width: 100%;
+  z-index: 2;
+  top: 0;
 `;
 const Content = styled.div`
   display: flex;
@@ -51,12 +50,15 @@ const Landing = () => {
   return (
     <Content>
       <NavContent>
-        <Link style={{ position: "relative" }} to={`/main/user/${user.userId}`}>
+        <Link
+          style={{ position: "relative" }}
+          to={{ pathname: `/main/${user.name}`, state: { user } }}
+        >
           <UserImage role={user.role} name={user.name} />
         </Link>
         <h2 style={{ fontSize: "1.4rem" }}>Acceuil</h2>
         <Link
-          style={{ color: "#F4F4F4", fontSize: "1.4rem" }}
+          style={{ color: "var(--primary-color)", fontSize: "1.4rem" }}
           to={`/auth/SignIn`}
           onClick={SignOut}
         >

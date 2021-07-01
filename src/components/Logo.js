@@ -12,7 +12,7 @@ const LogoTitle = styled.h1`
   font-weight: 700;
 `
 
-const Logo = ({height = "80px", color = "#F4F4F4"}) => {
+const Logo = ({height = "80px", color = "var(--primary-color)"}) => {
   return (
     <LogoSvg>
       <svg

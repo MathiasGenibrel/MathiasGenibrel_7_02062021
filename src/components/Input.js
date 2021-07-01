@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const InputText = styled.label`
-  color: #f4f4f4;
+  color: var(--primary-color);
   font-size: 0.9rem;
   font-weight: 500;
   margin: calc(var(--spacing) * 1) 0 0.3rem 0.5rem;
@@ -11,7 +11,7 @@ const InputText = styled.label`
 
 const InputUser = styled.input`
   background: rgba(1, 24, 39, 0.95);
-  color: #f4f4f4;
+  color: var(--primary-color);
   height: 60px;
   width: calc(260px - var(--spacing));
   padding-left: var(--spacing);

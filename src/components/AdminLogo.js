@@ -7,11 +7,11 @@ const AdminIcon = styled.svg`
   bottom: 0;
 `;
 
-const AdminLogo = ({ height = "80px", color = "#F4F4F4", secondColor = "#011827" }) => {
+const AdminLogo = ({ height = "1rem", color = "var(--primary-color)", secondColor = "var(--third-color)" }) => {
   return (
     <>
       <AdminIcon
-        height= "1rem"
+        height= {height}
         aria-hidden="true"
         focusable="false"
         data-prefix="fas"

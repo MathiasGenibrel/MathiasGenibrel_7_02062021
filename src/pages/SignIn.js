@@ -17,6 +17,8 @@ const SignContent = styled.div`
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
   background-color: var(--second-color);
+  height: fit-content;
+  margin: auto 0;
 `;
 
 const SignUpLink = styled.span`
