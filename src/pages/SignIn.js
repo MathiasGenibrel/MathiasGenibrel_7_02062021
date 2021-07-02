@@ -30,6 +30,7 @@ const SignUpLink = styled.span`
 `;
 
 const SignIn = () => {
+  localStorage.setItem("theme", "light")
   const { slug } = useParams();
   const redirect = useHistory();
 

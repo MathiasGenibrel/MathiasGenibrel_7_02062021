@@ -50,7 +50,6 @@ const Landing = () => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result)
         setUser(result);
       });
   }, []);

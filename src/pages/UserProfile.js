@@ -7,6 +7,7 @@ import DeleteLogo from "../components/DeleteLogo";
 import PostContent from "../components/PostContent";
 import { ROUTES, fetcher } from "../utils/Api";
 import { getCookie } from "../utils/Cookie";
+import SwitchLightMode from "../components/lightMode";
 
 const NavUser = styled.div`
   display: flex;
@@ -27,6 +28,7 @@ const Navigation = styled.nav`
 `;
 
 const UserInfo = styled.div`
+  position: relative;
   color: var(--third-color);
   background-color: var(--primary-color);
   padding: 3.3rem 0 0.3rem 0;
@@ -37,13 +39,51 @@ const UserIconPosition = styled.div`
   position: absolute;
   border: solid var(--primary-color) 7px;
   border-radius: 50%;
-  top: 55px;
+  top: -40px;
   left: calc(50% - (65px + 7px * 2) / 2);
+`;
+
+const UserPosts = styled.p`
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-top: 1.1rem;
+`;
+
+const UserRole = styled.p`
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  opacity: 70%;
+`;
+
+const UserName = styled.p`
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+`;
+
+const UserDescription = styled.p`
+  font-size: 0.9rem;
+  margin-bottom: 0.2rem;
+`;
+
+const LightMode = styled.div`
+  position: absolute;
+  right: 2rem;
+  top: 1rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  border: solid var(--second-color) 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const UserProfile = () => {
   const userInfo = useLocation().state.user;
   const [posts, setPosts] = useState([]);
+  const [theme, setTheme] = useState(localStorage.getItem("theme"))
 
   useEffect(() => {
     fetcher(`${ROUTES.post}/user/${userInfo.id}`, {
@@ -54,7 +94,7 @@ const UserProfile = () => {
       .then((result) => {
         setPosts(result);
       });
-  }, []);
+  }, [posts]);
 
   return (
     <NavUser>
@@ -66,23 +106,19 @@ const UserProfile = () => {
         <UserIconPosition>
           <UserImage role={userInfo.role} name={userInfo.name} height="65px" />
         </UserIconPosition>
-        <p style={{ fontSize: "1.2rem", fontWeight: "700" }}>{userInfo.name}</p>
-        <p>{userInfo.description}</p>
-        <p
-          style={{
-            fontSize: ".8rem",
-            fontWeight: "700",
-            textTransform: "uppercase",
-            opacity: "70%",
+        <LightMode
+          onClick={() => {
+            const changeTheme = theme === "light" ? "dark" : "light"
+            setTheme(changeTheme)
+            localStorage.setItem("theme", changeTheme);
           }}
         >
-          {userInfo.role}
-        </p>
-        <p
-          style={{ fontSize: "1.2rem", fontWeight: "700", marginTop: "1.5rem" }}
-        >
-          Post récent
-        </p>
+          <SwitchLightMode theme={theme} />
+        </LightMode>
+        <UserName>{userInfo.name}</UserName>
+        <UserDescription>{userInfo.description}</UserDescription>
+        <UserRole>{userInfo.role}</UserRole>
+        <UserPosts>Post récent</UserPosts>
       </UserInfo>
       {posts.map((post) => (
         <PostContent key={post.id} post={post} />
