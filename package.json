@@ -39,7 +39,9 @@
   },
   "devDependencies": {
     "@iconify-icons/clarity": "^1.1.1",
+    "@iconify-icons/fxemoji": "^1.1.0",
     "@iconify-icons/heroicons-solid": "^1.1.1",
+    "@iconify-icons/iconoir": "^1.1.0",
     "@iconify/react": "^1.1.4"
   }
 }

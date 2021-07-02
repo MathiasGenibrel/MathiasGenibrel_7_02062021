@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import UserImage from "./UserImg";
+import { Icon } from "@iconify/react";
+import cancelIcon from "@iconify-icons/iconoir/cancel";
+import { getCookie } from "../utils/Cookie";
 
 const Post = styled.div`
   margin: 1.5rem 1rem 0 1rem;
@@ -8,6 +11,7 @@ const Post = styled.div`
   background-color: var(--second-color);
   color: var(--primary-color);
   border-radius: 1rem;
+  position: relative;
 `;
 
 const UserInfo = styled.div`
@@ -46,7 +50,18 @@ const UserVoteIcon = styled.div`
   width: 2rem;
 `;
 
-const PostContent = ({ post }) => {
+const DeletePost = styled.div`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: #f4f4f4;
+`;
+
+const PostContent = ({ post, onClick }) => {
+  const deletePost =
+    post.userId === getCookie("userId") ? (
+      <Icon icon={cancelIcon} color="#f4f4f4" height="2.2rem" />
+    ) : null;
   const text = post.text ? <p>{post.text}</p> : null;
   const img = post.imgUrl ? (
     <img
@@ -66,6 +81,11 @@ const PostContent = ({ post }) => {
           <span style={{ fontSize: ".9rem" }}>{post.user.description}</span>
         </UserProfilText>
       </UserInfo>
+      <DeletePost
+        onClick={onClick}
+      >
+        {deletePost}
+      </DeletePost>
       <UserPost>
         {text}
         {img}

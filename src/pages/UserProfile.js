@@ -83,7 +83,8 @@ const LightMode = styled.div`
 const UserProfile = () => {
   const userInfo = useLocation().state.user;
   const [posts, setPosts] = useState([]);
-  const [theme, setTheme] = useState(localStorage.getItem("theme"))
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem("theme"));
 
   useEffect(() => {
     fetcher(`${ROUTES.post}/user/${userInfo.id}`, {
@@ -93,8 +94,9 @@ const UserProfile = () => {
       .then((res) => res.json())
       .then((result) => {
         setPosts(result);
+        setIsUpdate(false);
       });
-  }, [posts]);
+  }, [isUpdate]);
 
   return (
     <NavUser>
@@ -108,8 +110,8 @@ const UserProfile = () => {
         </UserIconPosition>
         <LightMode
           onClick={() => {
-            const changeTheme = theme === "light" ? "dark" : "light"
-            setTheme(changeTheme)
+            const changeTheme = theme === "light" ? "dark" : "light";
+            setTheme(changeTheme);
             localStorage.setItem("theme", changeTheme);
           }}
         >
@@ -121,7 +123,17 @@ const UserProfile = () => {
         <UserPosts>Post récent</UserPosts>
       </UserInfo>
       {posts.map((post) => (
-        <PostContent key={post.id} post={post} />
+        <PostContent
+          key={post.id}
+          post={post}
+          onClick={async () => {
+            await fetcher(`${ROUTES.post}/${post.id}`, {
+              method: "DELETE",
+              headers: { authorization: `Bearer ${getCookie("BearerToken")}` },
+            });
+            setIsUpdate(true);
+          }}
+        />
       ))}
     </NavUser>
   );

@@ -31,6 +31,7 @@ const Content = styled.div`
 const Landing = () => {
   const [user, setUser] = useState({});
   const [allPost, setAllPost] = useState([]);
+  const [isUpdate, setIsUpdate] = useState(false);
 
   useEffect(() => {
     fetcher(ROUTES.post, {
@@ -40,8 +41,9 @@ const Landing = () => {
       .then((res) => res.json())
       .then((result) => {
         setAllPost(result);
+        setIsUpdate(false)
       });
-  }, []);
+  }, [isUpdate]);
 
   useEffect(() => {
     fetcher(`${ROUTES.user}/${getCookie("userId")}`, {
@@ -72,8 +74,22 @@ const Landing = () => {
           <i className="fas fa-sign-out-alt"></i>
         </Link>
       </NavContent>
-      {allPost.map((element, index) => {
-        return <PostContent key={index} post={element} />;
+      {allPost.map((post, index) => {
+        return (
+          <PostContent
+            key={index}
+            post={post}
+            onClick={async () => {
+              await fetcher(`${ROUTES.post}/${post.id}`, {
+                method: "DELETE",
+                headers: {
+                  authorization: `Bearer ${getCookie("BearerToken")}`,
+                },
+              });
+              setIsUpdate(true);
+            }}
+          />
+        );
       })}
     </Content>
   );
