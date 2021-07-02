@@ -123,7 +123,6 @@ exports.findAll = async (req, res) => {
 
   POSTS.findAll({
     order: [["createdAt", orderPost]],
-    attributes: { exclude: ["userId"] },
     offset: offsetPost,
     limit: limitPost,
     include: [
@@ -173,7 +172,6 @@ exports.findAllByUserId = (req, res) => {
     order: [["createdAt", "DESC"]],
     offset: offsetPost,
     limit: limitPost,
-    attributes: { exclude: ["userId"] },
     include: [{ model: DB.users, attributes: ["name", "description", "role"] }],
   })
     .then((data) => {
@@ -257,7 +255,7 @@ exports.delete = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Could not delete post with id=" + id,
+        message: err || "Could not delete post with id=" + id,
       });
     });
 };
