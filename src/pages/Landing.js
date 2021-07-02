@@ -44,9 +44,9 @@ const Landing = () => {
   }, []);
 
   useEffect(() => {
-    fetcher(ROUTES.user, {
+    fetcher(`${ROUTES.user}/${getCookie("userId")}`, {
       method: "GET",
-      headers: { authorization: `Bearer ${getCookie("userId")}` },
+      headers: { authorization: `Bearer ${getCookie("BearerToken")}` },
     })
       .then((res) => res.json())
       .then((result) => {
