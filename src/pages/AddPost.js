@@ -166,6 +166,7 @@ export default function AddPost() {
       </UserPost>
       <UserSendPostBtn
         onClick={async () => {
+          if (textPost === "" && inputImg === "Ajoute une image" ) return false
           await fetcher(`${ROUTES.post}`, {
             method: "POST",
             headers: {
