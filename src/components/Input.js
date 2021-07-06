@@ -25,7 +25,7 @@ const InputContent = styled.div`
   flex-direction: column;
 `;
 
-const Input = ({ label, type, value, onChange }) => {
+const Input = ({ label, type, value, onChange, onKeyDown }) => {
   return (
     <InputUser
       name={label}
@@ -33,6 +33,7 @@ const Input = ({ label, type, value, onChange }) => {
       type={type}
       value={value}
       onChange={onChange}
+      onKeyDown={onKeyDown}
     />
   );
 };
@@ -52,6 +53,7 @@ const InputWithLabel = ({
   text,
   value,
   onChange,
+  onKeyDown,
 }) => {
   return (
     <InputContent>
@@ -61,6 +63,7 @@ const InputWithLabel = ({
           type={type}
           value={value}
           onChange={onChange}
+          onKeyDown={onKeyDown}
         ></Input>
       </WithLabel>
     </InputContent>

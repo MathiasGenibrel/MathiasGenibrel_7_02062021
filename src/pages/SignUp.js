@@ -37,6 +37,10 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("")
 
+  const handleKeydown = (e) => {
+    if (e.key === "Enter") handleClick()
+  }
+
   const handleClick = async () => {
     const userLogin = await LoggingIn(slug, username, password, confirmPassword);
     if (userLogin) redirect.push("/main");
@@ -76,6 +80,7 @@ const SignUp = () => {
       <InputWithLabel
         value={confirmPassword}
         onChange={handleConfirmPasswordChange}
+        onKeyDown={handleKeydown}
         label="confirmPassword"
         text="Confirmez votre mot de passe"
         type="password"

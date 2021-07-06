@@ -30,9 +30,13 @@ const SignUpLink = styled.span`
 `;
 
 const SignIn = () => {
-  localStorage.setItem("theme", "light")
+  localStorage.setItem("theme", "light");
   const { slug } = useParams();
   const redirect = useHistory();
+
+  const handleKeydown = (e) => {
+    if (e.key === "Enter") handleClick()
+  }
 
   const handleClick = async () => {
     const userLogin = await LoggingIn(slug, username, password);
@@ -63,6 +67,7 @@ const SignIn = () => {
         <InputWithLabel
           value={password}
           onChange={handlePasswordChange}
+          onKeyDown={handleKeydown}
           label="password"
           text="Mot de passe"
           type="password"
