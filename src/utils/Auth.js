@@ -1,13 +1,15 @@
 import { setCookie } from "./Cookie";
 import { ROUTES, fetcher } from "./Api";
 
-export const LoggingIn = async (location, userName, password) => {
+export const LoggingIn = async (
+  location,
+  userName,
+  password,
+  confirmPassword
+) => {
   let apiLocation = location.toLowerCase();
-  let confirmPassword = "";
 
   if (!userName || !password) return console.error("Des champs sont vides");
-  if (apiLocation === "signup")
-    confirmPassword = document.body.querySelector("#confirmPassword").value;
   if (apiLocation === "signup" && password !== confirmPassword)
     return console.error("Les mots de passe ne sont pas identique");
 
@@ -23,6 +25,9 @@ export const LoggingIn = async (location, userName, password) => {
     },
     body: JSON.stringify({ user }),
   });
+
+  if (apiLocation === "signup")
+    return LoggingIn("signIn", user.name, user.password);
 
   const infoUser = await response.json();
 

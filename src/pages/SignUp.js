@@ -4,7 +4,8 @@ import LogoSvg from "../components/Logo";
 import Back from "../components/Back";
 import styled from "styled-components";
 import { LoggingIn } from "../utils/Auth";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
+import { useState } from "react";
 
 const SignContent = styled.div`
   display: flex;
@@ -30,6 +31,28 @@ const BackPostion = styled.div`
 
 const SignUp = () => {
   const { slug } = useParams();
+  const redirect = useHistory();
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("")
+
+  const handleClick = async () => {
+    const userLogin = await LoggingIn(slug, username, password, confirmPassword);
+    if (userLogin) redirect.push("/main");
+  };
+
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+  
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+  };
 
   return (
     <SignContent>
@@ -38,20 +61,26 @@ const SignUp = () => {
       </BackPostion>
       <LogoSvg height="150px" />
       <InputWithLabel
+        value={username}
+        onChange={handleUsernameChange}
         label="userName"
         text="Nom d'utilisateur"
       ></InputWithLabel>
       <InputWithLabel
+        value={password}
+        onChange={handlePasswordChange}
         label="password"
         text="Mot de passe"
         type="password"
       ></InputWithLabel>
       <InputWithLabel
+        value={confirmPassword}
+        onChange={handleConfirmPasswordChange}
         label="confirmPassword"
         text="Confirmez votre mot de passe"
         type="password"
       ></InputWithLabel>
-      <Button onClick={() => LoggingIn(slug)} text="S'inscrire" />
+      <Button onClick={handleClick} text="S'inscrire" />
     </SignContent>
   );
 };
