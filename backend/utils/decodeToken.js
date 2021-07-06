@@ -7,8 +7,6 @@ const getIdUser = (req) => {
   const decodedToken = jwt.verify(token, randomToken);
   const userId = decodedToken.userId;
 
-  console.log(userId)
-
   return userId;
 };
 

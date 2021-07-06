@@ -89,7 +89,7 @@ const UserProfile = () => {
   useEffect(() => {
     fetcher(`${ROUTES.post}/user/${userInfo.id}`, {
       method: "GET",
-      headers: { authorization: `Bearer ${getCookie("userId")}` },
+      headers: { authorization: `Bearer ${getCookie("BearerToken")}` },
     })
       .then((res) => res.json())
       .then((result) => {
