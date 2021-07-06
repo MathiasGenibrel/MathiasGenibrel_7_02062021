@@ -7,6 +7,8 @@ import styled from "styled-components";
 import { SignOut } from "../utils/Auth";
 import { useEffect } from "react";
 import { ROUTES, fetcher } from "../utils/Api";
+import { Icon } from "@iconify/react";
+import featherIcon from "@iconify-icons/fa-solid/feather";
 
 const NavContent = styled.nav`
   background-color: var(--third-color);
@@ -23,9 +25,25 @@ const NavContent = styled.nav`
 
 const Content = styled.div`
   display: flex;
-  padding: 4.2rem 0;
+  padding: 4.2rem 0 6.5rem;
   flex-direction: column;
   width: 100%;
+  position: relative;
+`;
+
+const AddContent = styled(Link)`
+  background-color: var(--third-color);
+  border-radius: 50%;
+  border: solid 0.2rem var(--second-color);
+  height: 3rem;
+  width: 3rem;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  box-shadow: 2.5px 5px 8px rgba(0, 0, 0, 0.4);
 `;
 
 const Landing = () => {
@@ -41,7 +59,7 @@ const Landing = () => {
       .then((res) => res.json())
       .then((result) => {
         setAllPost(result);
-        setIsUpdate(false)
+        setIsUpdate(false);
       });
   }, [isUpdate]);
 
@@ -91,6 +109,9 @@ const Landing = () => {
           />
         );
       })}
+      <AddContent to={{ pathname: `/main/newPost`, state: { user } }}>
+        <Icon icon={featherIcon} color="#f4f4f4" height="1.5rem" />
+      </AddContent>
     </Content>
   );
 };

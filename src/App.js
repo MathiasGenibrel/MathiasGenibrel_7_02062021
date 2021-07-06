@@ -5,6 +5,7 @@ import Landing from "./pages/Landing";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import React from "react";
+import AddPost from "./pages/AddPost";
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
             }}
           />
           <Route path="/main" exact component={Landing} />
+          <Route path="/main/newPost" component={AddPost} />
           <Route path="/main/:slug" component={UserProfile} />
           <Route path="/" component={NotFound} />
         </Switch>
