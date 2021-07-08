@@ -11,6 +11,7 @@ import { Icon } from "@iconify/react";
 import featherIcon from "@iconify-icons/fa-solid/feather";
 import usePost from "../hooks/usePost";
 import { deletePost } from "../utils/Post";
+import { upVote, downVote } from "../utils/Post";
 
 const NavContent = styled.nav`
   background-color: var(--third-color);
@@ -48,9 +49,9 @@ const AddContent = styled(Link)`
   box-shadow: 2.5px 5px 8px rgba(0, 0, 0, 0.4);
 `;
 
-const Title = styled.h2 `
+const Title = styled.h2`
   font-size: 1.4rem;
-`
+`;
 
 const SignOutBtn = styled(Link)`
   color: var(--primary-color);
@@ -69,28 +70,6 @@ const Landing = () => {
       setUser(result);
     });
   }, []);
-
-  const userVote = async (vote, id) => {
-    await fetcher(`${ROUTES.post}/${id}/vote`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${getCookie("BearerToken")}`,
-      },
-      body: JSON.stringify({ vote: vote }),
-    });
-    refetch();
-  };
-
-  const upVote = (votes, id) => {
-    if (votes[0] === undefined) return userVote("upVote", id);
-    if (votes[0].vote !== "upVote") return userVote("upVote", id);
-  };
-
-  const downVote = (votes, id) => {
-    if (votes[0] === undefined) return userVote("downVote", id);
-    if (votes[0].vote !== "downVote") return userVote("downVote", id);
-  };
 
   return (
     <Content>
@@ -112,8 +91,8 @@ const Landing = () => {
             key={post.id}
             post={post}
             onClickDelete={() => deletePost(post.id, refetch)}
-            onClickUpVote={() => upVote(post.votes, post.id)}
-            onClickDownVote={() => downVote(post.votes, post.id)}
+            onClickUpVote={() => upVote(post.votes, post.id, refetch)}
+            onClickDownVote={() => downVote(post.votes, post.id, refetch)}
           />
         );
       })}

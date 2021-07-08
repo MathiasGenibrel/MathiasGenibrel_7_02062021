@@ -5,17 +5,16 @@ const DeleteIcon = styled.svg`
   position: relative;
   right: 0;
   bottom: 0;
+  color: var(--second-color);
 `;
 
 const DeleteLogo = ({
   height = "1.4rem",
-  color = "var(--primary-color)",
 }) => {
   return (
     <>
       <DeleteIcon
         height={height}
-        color={color}
         aria-hidden="true"
         focusable="false"
         data-prefix="fas"
