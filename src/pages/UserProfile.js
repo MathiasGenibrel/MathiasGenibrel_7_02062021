@@ -50,7 +50,7 @@ const UserProfile = () => {
         <PostContent
           key={post.id}
           post={post}
-          onClickDelete={() => deletePost(post.id, refetch)}
+          onClickDelete={() => deletePost(post.id, user.role, refetch)}
           onClickUpVote={() => upVote(post.votes, post.id, refetch)}
           onClickDownVote={() => downVote(post.votes, post.id, refetch)}
         />

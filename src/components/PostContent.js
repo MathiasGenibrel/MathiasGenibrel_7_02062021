@@ -62,12 +62,15 @@ const DeletePost = styled.div`
 
 const PostContent = ({
   post,
+  userRole,
   onClickDelete,
   onClickUpVote,
   onClickDownVote,
 }) => {
   const deletePost =
     post.userId === getCookie("userId") ? (
+      <Icon icon={cancelIcon} color="#f4f4f4" height="2.2rem" />
+    ) : userRole === "admin" ? (
       <Icon icon={cancelIcon} color="#f4f4f4" height="2.2rem" />
     ) : null;
   const text = post.text ? <p>{post.text}</p> : null;
