@@ -48,6 +48,9 @@ const UserVoteIcon = styled.div`
   display: flex;
   justify-content: space-between;
   width: 2rem;
+  &:active {
+    transform: scale(0.95);
+  }
 `;
 
 const DeletePost = styled.div`
@@ -57,7 +60,12 @@ const DeletePost = styled.div`
   color: #f4f4f4;
 `;
 
-const PostContent = ({ post, onClick }) => {
+const PostContent = ({
+  post,
+  onClickDelete,
+  onClickUpVote,
+  onClickDownVote,
+}) => {
   const deletePost =
     post.userId === getCookie("userId") ? (
       <Icon icon={cancelIcon} color="#f4f4f4" height="2.2rem" />
@@ -81,22 +89,18 @@ const PostContent = ({ post, onClick }) => {
           <span style={{ fontSize: ".9rem" }}>{post.user.description}</span>
         </UserProfilText>
       </UserInfo>
-      <DeletePost
-        onClick={onClick}
-      >
-        {deletePost}
-      </DeletePost>
+      <DeletePost onClick={onClickDelete}>{deletePost}</DeletePost>
       <UserPost>
         {text}
         {img}
       </UserPost>
       <UserVote>
-        <UserVoteIcon>
+        <UserVoteIcon onClick={onClickUpVote}>
           <i className="fas fa-arrow-up"></i>
           <span>{post.upVote}</span>
         </UserVoteIcon>
         <i className="fas fa-comment"></i>
-        <UserVoteIcon>
+        <UserVoteIcon onClick={onClickDownVote}>
           <i className="fas fa-arrow-down"></i>
           <span>{post.downVote}</span>
         </UserVoteIcon>

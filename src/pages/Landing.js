@@ -9,6 +9,8 @@ import { useEffect } from "react";
 import { ROUTES, fetcher } from "../utils/Api";
 import { Icon } from "@iconify/react";
 import featherIcon from "@iconify-icons/fa-solid/feather";
+import usePost from "../hooks/usePost";
+import { deletePost } from "../utils/Post";
 
 const NavContent = styled.nav`
   background-color: var(--third-color);
@@ -46,33 +48,49 @@ const AddContent = styled(Link)`
   box-shadow: 2.5px 5px 8px rgba(0, 0, 0, 0.4);
 `;
 
+const Title = styled.h2 `
+  font-size: 1.4rem;
+`
+
+const SignOutBtn = styled(Link)`
+  color: var(--primary-color);
+  font-size: 1.4rem;
+`;
+
 const Landing = () => {
   const [user, setUser] = useState({});
-  const [allPost, setAllPost] = useState([]);
-  const [isUpdate, setIsUpdate] = useState(false);
-
-  useEffect(() => {
-    fetcher(ROUTES.post, {
-      method: "GET",
-      headers: { authorization: `Bearer ${getCookie("BearerToken")}` },
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        setAllPost(result);
-        setIsUpdate(false);
-      });
-  }, [isUpdate]);
+  const [allPost, refetch] = usePost();
 
   useEffect(() => {
     fetcher(`${ROUTES.user}/${getCookie("userId")}`, {
       method: "GET",
       headers: { authorization: `Bearer ${getCookie("BearerToken")}` },
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        setUser(result);
-      });
+    }).then((result) => {
+      setUser(result);
+    });
   }, []);
+
+  const userVote = async (vote, id) => {
+    await fetcher(`${ROUTES.post}/${id}/vote`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${getCookie("BearerToken")}`,
+      },
+      body: JSON.stringify({ vote: vote }),
+    });
+    refetch();
+  };
+
+  const upVote = (votes, id) => {
+    if (votes[0] === undefined) return userVote("upVote", id);
+    if (votes[0].vote !== "upVote") return userVote("upVote", id);
+  };
+
+  const downVote = (votes, id) => {
+    if (votes[0] === undefined) return userVote("downVote", id);
+    if (votes[0].vote !== "downVote") return userVote("downVote", id);
+  };
 
   return (
     <Content>
@@ -83,29 +101,19 @@ const Landing = () => {
         >
           <UserImage role={user.role} name={user.name} />
         </Link>
-        <h2 style={{ fontSize: "1.4rem" }}>Acceuil</h2>
-        <Link
-          style={{ color: "var(--primary-color)", fontSize: "1.4rem" }}
-          to={`/auth/SignIn`}
-          onClick={SignOut}
-        >
+        <Title>Acceuil</Title>
+        <SignOutBtn to={`/auth/SignIn`} onClick={SignOut}>
           <i className="fas fa-sign-out-alt"></i>
-        </Link>
+        </SignOutBtn>
       </NavContent>
-      {allPost.map((post, index) => {
+      {allPost.map((post) => {
         return (
           <PostContent
-            key={index}
+            key={post.id}
             post={post}
-            onClick={async () => {
-              await fetcher(`${ROUTES.post}/${post.id}`, {
-                method: "DELETE",
-                headers: {
-                  authorization: `Bearer ${getCookie("BearerToken")}`,
-                },
-              });
-              setIsUpdate(true);
-            }}
+            onClickDelete={() => deletePost(post.id, refetch)}
+            onClickUpVote={() => upVote(post.votes, post.id)}
+            onClickDownVote={() => downVote(post.votes, post.id)}
           />
         );
       })}

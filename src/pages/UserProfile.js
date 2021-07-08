@@ -1,13 +1,13 @@
 import UserImage from "../components/UserImg";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import Back from "../components/Back";
 import DeleteLogo from "../components/DeleteLogo";
 import PostContent from "../components/PostContent";
-import { ROUTES, fetcher } from "../utils/Api";
-import { getCookie } from "../utils/Cookie";
 import SwitchLightMode from "../components/lightMode";
+import usePost from "../hooks/usePost";
+import { deletePost } from "../utils/Post";
 
 const NavUser = styled.div`
   display: flex;
@@ -81,22 +81,16 @@ const LightMode = styled.div`
 `;
 
 const UserProfile = () => {
-  const userInfo = useLocation().state.user;
-  const [posts, setPosts] = useState([]);
-  const [isUpdate, setIsUpdate] = useState(false);
+  const user = useLocation().state.user;
+  const [posts, refetch] = usePost(user.id);
+
   const [theme, setTheme] = useState(localStorage.getItem("theme"));
 
-  useEffect(() => {
-    fetcher(`${ROUTES.post}/user/${userInfo.id}`, {
-      method: "GET",
-      headers: { authorization: `Bearer ${getCookie("BearerToken")}` },
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        setPosts(result);
-        setIsUpdate(false);
-      });
-  }, [isUpdate]);
+  const switchMode = () => {
+    const changeTheme = theme === "light" ? "dark" : "light";
+    setTheme(changeTheme);
+    localStorage.setItem("theme", changeTheme);
+  };
 
   return (
     <NavUser>
@@ -106,33 +100,21 @@ const UserProfile = () => {
       </Navigation>
       <UserInfo>
         <UserIconPosition>
-          <UserImage role={userInfo.role} name={userInfo.name} height="65px" />
+          <UserImage role={user.role} name={user.name} height="65px" />
         </UserIconPosition>
-        <LightMode
-          onClick={() => {
-            const changeTheme = theme === "light" ? "dark" : "light";
-            setTheme(changeTheme);
-            localStorage.setItem("theme", changeTheme);
-          }}
-        >
+        <LightMode onClick={switchMode}>
           <SwitchLightMode theme={theme} />
         </LightMode>
-        <UserName>{userInfo.name}</UserName>
-        <UserDescription>{userInfo.description}</UserDescription>
-        <UserRole>{userInfo.role}</UserRole>
+        <UserName>{user.name}</UserName>
+        <UserDescription>{user.description}</UserDescription>
+        <UserRole>{user.role}</UserRole>
         <UserPosts>Post récent</UserPosts>
       </UserInfo>
       {posts.map((post) => (
         <PostContent
           key={post.id}
           post={post}
-          onClick={async () => {
-            await fetcher(`${ROUTES.post}/${post.id}`, {
-              method: "DELETE",
-              headers: { authorization: `Bearer ${getCookie("BearerToken")}` },
-            });
-            setIsUpdate(true);
-          }}
+          onClickDelete={() => deletePost(post.id, refetch)}
         />
       ))}
     </NavUser>
