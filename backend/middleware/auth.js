@@ -1,10 +1,8 @@
-const jwt = require("jsonwebtoken");
 const getUserIDByToken = require("../utils/decodeToken");
 
 module.exports = (req, res, next) => {
   const userId = req.body.userId;
   const authorization = req.headers.authorization;
-  console.log(authorization)
   
   try {
     if (!authorization) throw "No user logged in";
