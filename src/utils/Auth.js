@@ -29,7 +29,7 @@ export const LoggingIn = async (
   if (apiLocation === "signup")
     return LoggingIn("signIn", user.name, user.password);
 
-  const infoUser = await response.json();
+  const infoUser = await response;
 
   setCookie("userId", infoUser.userId);
   setCookie("BearerToken", infoUser.token);

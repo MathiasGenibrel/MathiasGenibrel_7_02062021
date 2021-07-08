@@ -80,33 +80,15 @@ exports.userVote = async (req, res) => {
       });
   };
 
-  await VOTES.update(req.body, {
-    where: { userId, postId },
-  })
-    .then((execute) => {
-      if (execute == 1) {
-        return res.send({
-          message: "Vote was updated successfully.",
-        });
-      }
-      VOTES.create(vote)
-        .then((data) => {
-          updatePostVote();
-          res.send(data);
-        })
-        .catch((err) => {
-          res.status(500).send({
-            message:
-              err.message || "Some error occurred while creating the vote.",
-          });
-        });
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err || "Some error occurred while creating the vote.",
-      });
+  const upsert = (values, condition) => {
+    return VOTES.findOne({ where: condition }).then((obj) => {
+      if (obj) return obj.update(values);
+      
+      return VOTES.create(values);
     });
+  };
 
+  await upsert(vote, { userId, postId });
   updatePostVote();
 };
 
@@ -141,7 +123,7 @@ exports.findAll = async (req, res) => {
       {
         model: VOTES,
         required: false,
-        limit: 5,
+        where: { userId: getIdUser(req) },
         nest: true,
         include: [
           {
@@ -172,7 +154,16 @@ exports.findAllByUserId = (req, res) => {
     order: [["createdAt", "DESC"]],
     offset: offsetPost,
     limit: limitPost,
-    include: [{ model: DB.users, attributes: ["name", "description", "role"] }],
+    include: [
+      { model: DB.users, attributes: ["name", "description", "role"] },
+      {
+        model: VOTES,
+        required: false,
+        where: { userId: getIdUser(req) },
+        nest: true,
+        attributes: ["vote", "userId"],
+      },
+    ],
   })
     .then((data) => {
       res.send(data);
