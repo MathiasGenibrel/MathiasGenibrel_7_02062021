@@ -8,12 +8,11 @@ const DeleteIcon = styled.svg`
   color: var(--second-color);
 `;
 
-const DeleteLogo = ({
-  height = "1.4rem",
-}) => {
+const DeleteLogo = ({ height = "1.4rem", onClick }) => {
   return (
     <>
       <DeleteIcon
+        onClick={onClick}
         height={height}
         aria-hidden="true"
         focusable="false"

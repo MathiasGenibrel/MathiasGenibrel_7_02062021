@@ -1,4 +1,4 @@
-import { setCookie } from "./Cookie";
+import { setCookie, getCookie } from "./Cookie";
 import { ROUTES, fetcher } from "./Api";
 
 export const LoggingIn = async (
@@ -39,4 +39,13 @@ export const LoggingIn = async (
 export const SignOut = () => {
   setCookie("userId", "", "", "Mon, 02 Oct 2000 01:00:00 GMT");
   setCookie("BearerToken", "", "", "Mon, 02 Oct 2000 01:00:00 GMT");
+};
+
+export const deleteAccount = async (id) => {
+  await fetcher(`${ROUTES.user}/${id}`, {
+    method: "DELETE",
+    headers: { authorization: `Bearer ${getCookie("BearerToken")}` },
+  });
+
+  return true;
 };

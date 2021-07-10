@@ -123,7 +123,7 @@ exports.delete = (req, res) => {
   const id = req.params.id;
 
   Users.destroy({
-    where: { id, userId: getIdUser(req) },
+    where: { id },
   })
     .then((execute) => {
       if (execute == 1) {
