@@ -83,7 +83,7 @@ exports.userVote = async (req, res) => {
   const upsert = (values, condition) => {
     return VOTES.findOne({ where: condition }).then((obj) => {
       if (obj) return obj.update(values);
-      
+
       return VOTES.create(values);
     });
   };
@@ -108,7 +108,7 @@ exports.findAll = async (req, res) => {
     offset: offsetPost,
     limit: limitPost,
     include: [
-      { model: DB.users, attributes: ["name", "description", "role"] },
+      { model: DB.users, attributes: ["id", "name", "description", "role"] },
       {
         model: DB.comments,
         attributes: ["id", "comment", "createdAt", "updatedAt", "userId"],

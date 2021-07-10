@@ -2,6 +2,7 @@ import UserImage from "../components/UserImg";
 import SwitchLightMode from "../components/lightMode";
 import React from "react";
 import styled from "styled-components";
+import { getCookie } from "../utils/Cookie";
 
 const UserInfo = styled.div`
   position: relative;
@@ -56,15 +57,20 @@ const LightMode = styled.div`
   justify-content: center;
 `;
 
-export const UserInfoProfil = ({user, switchMode, theme}) => {
+export const UserInfoProfil = ({ user, switchMode, theme }) => {
+  const switchModeBtn =
+    user.id === getCookie("userId") ? (
+      <LightMode onClick={switchMode}>
+        <SwitchLightMode theme={theme} />
+      </LightMode>
+    ) : null;
+
   return (
     <UserInfo>
       <UserIconPosition>
         <UserImage role={user.role} name={user.name} height="65px" />
       </UserIconPosition>
-      <LightMode onClick={switchMode}>
-        <SwitchLightMode theme={theme} />
-      </LightMode>
+      {switchModeBtn}
       <UserName>{user.name}</UserName>
       <UserDescription>{user.description}</UserDescription>
       <UserRole>{user.role}</UserRole>

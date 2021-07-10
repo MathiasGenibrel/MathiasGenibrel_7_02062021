@@ -9,6 +9,7 @@ import styled from "styled-components";
 import Back from "../components/Back";
 import { deleteAccount, SignOut } from "../utils/Auth";
 import { useHistory } from "react-router";
+import { getCookie } from "../utils/Cookie";
 
 const NavUser = styled.div`
   display: flex;
@@ -32,6 +33,9 @@ const UserProfile = () => {
   const redirect = useHistory();
   const user = useLocation().state.user;
   const [posts, refetch] = usePost(user.id);
+  const deleteAccountBtn = user.id === getCookie("userId") ? (
+    <DeleteLogo onClick={() => handleClick(user.id)} />
+  ) : <div/>;
 
   const [theme, setTheme] = useState(localStorage.getItem("theme"));
 
@@ -52,7 +56,7 @@ const UserProfile = () => {
   return (
     <NavUser>
       <Navigation>
-        <DeleteLogo onClick={() => handleClick(user.id)} />
+        {deleteAccountBtn}
         <Back angle="180" />
       </Navigation>
       <UserInfoProfil user={user} switchMode={switchMode} theme={theme} />

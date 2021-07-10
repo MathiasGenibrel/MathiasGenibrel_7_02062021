@@ -4,6 +4,7 @@ import UserImage from "./UserImg";
 import { Icon } from "@iconify/react";
 import cancelIcon from "@iconify-icons/iconoir/cancel";
 import { getCookie } from "../utils/Cookie";
+import { Link } from "react-router-dom";
 
 const Post = styled.div`
   margin: 1.5rem 1rem 0 1rem;
@@ -14,9 +15,10 @@ const Post = styled.div`
   position: relative;
 `;
 
-const UserInfo = styled.div`
+const UserInfo = styled(Link)`
   display: flex;
   margin: 0.7rem 0.5rem 1.3rem 0.5rem;
+  color: var(--primary-color);
 `;
 
 const UserProfilImg = styled.div`
@@ -83,7 +85,7 @@ const PostContent = ({
 
   return (
     <Post>
-      <UserInfo>
+      <UserInfo to={{ pathname: `/main/${post.user.name}`, state: { user: post.user } }}>
         <UserProfilImg>
           <UserImage role={post.user.role} name={post.user.name} />
         </UserProfilImg>
