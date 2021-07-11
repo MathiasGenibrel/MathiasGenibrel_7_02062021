@@ -12,6 +12,7 @@ import featherIcon from "@iconify-icons/fa-solid/feather";
 import usePost from "../hooks/usePost";
 import { deletePost } from "../utils/Post";
 import { upVote, downVote } from "../utils/Post";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const NavContent = styled.nav`
   background-color: var(--third-color);
@@ -58,9 +59,19 @@ const SignOutBtn = styled(Link)`
   font-size: 1.4rem;
 `;
 
+const TextEndPage = styled.p`
+  position: absolute;
+  bottom: 2.8rem;
+  left: 2rem;
+  color: var(--third-color);
+  font-size: 1.2rem;
+  font-weight: 700;
+`
+
 const Landing = () => {
   const [user, setUser] = useState({});
-  const [allPost, refetch] = usePost();
+  const [offset, setOffset] = useState(0);
+  const [allPost, refetch] = usePost(null, offset);
 
   useEffect(() => {
     fetcher(`${ROUTES.user}/${getCookie("userId")}`, {
@@ -85,8 +96,12 @@ const Landing = () => {
           <i className="fas fa-sign-out-alt"></i>
         </SignOutBtn>
       </NavContent>
-      {allPost.map((post) => {
-        return (
+      <InfiniteScroll
+        dataLength={allPost.length}
+        next={() => setOffset(offset + 5)}
+        hasMore={true}
+      >
+        {allPost.map((post) => (
           <PostContent
             key={post.id}
             post={post}
@@ -95,8 +110,9 @@ const Landing = () => {
             onClickUpVote={() => upVote(post.votes, post.id, refetch)}
             onClickDownVote={() => downVote(post.votes, post.id, refetch)}
           />
-        );
-      })}
+        ))}
+      </InfiniteScroll>
+      <TextEndPage>Plus rien pour aujourd'hui</TextEndPage>
       <AddContent to={{ pathname: `/main/newPost`, state: { user } }}>
         <Icon icon={featherIcon} color="#f4f4f4" height="1.5rem" />
       </AddContent>

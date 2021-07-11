@@ -83,6 +83,7 @@ export const UserNewPost = ({
           placeholder="Quoi de neuf ..."
           onChange={handlePostChange}
           value={textPost}
+          autoFocus
         ></UserInput>
       </UserText>
       <UserImg>
