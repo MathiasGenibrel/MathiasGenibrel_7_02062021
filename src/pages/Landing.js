@@ -11,7 +11,7 @@ import { Icon } from "@iconify/react";
 import featherIcon from "@iconify-icons/fa-solid/feather";
 import usePost from "../hooks/usePost";
 import { deletePost } from "../utils/Post";
-import { upVote, downVote } from "../utils/Post";
+import { upVote, downVote, userVote } from "../utils/Post";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const NavContent = styled.nav`
@@ -114,8 +114,8 @@ const Landing = () => {
               deletePost(post.id, user.role);
               deletePostDisplay(post.id);
             }}
-            onClickUpVote={() => upVote(post.votes, post.id)}
-            onClickDownVote={() => downVote(post.votes, post.id)}
+            onClickUpVote={(vote, id) => upVote(vote, id)}
+            onClickDownVote={(vote, id) => downVote(vote, id)}
           />
         ))}
       </InfiniteScroll>

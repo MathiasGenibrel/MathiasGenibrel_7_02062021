@@ -92,7 +92,10 @@ const PostContent = ({
 
   const userUpVote = () => {
     if (vote === "upVote") return;
-    if (vote === "none") return setVote("upVote"), setUpVote(upVote + 1);
+    if (vote === "none") {
+      setVote("upVote");
+      return setUpVote(upVote + 1);
+    }
     setVote("upVote");
     setUpVote(upVote + 1);
     setDownVote(downVote - 1);
@@ -100,7 +103,10 @@ const PostContent = ({
 
   const userDownVote = () => {
     if (vote === "downVote") return;
-    if (vote === "none") return setVote("downVote"), setUpVote(upVote - 1);
+    if (vote === "none") {
+      setVote("downVote");
+      return setDownVote(downVote + 1);
+    }
     setVote("downVote");
     setUpVote(upVote - 1);
     setDownVote(downVote + 1);
@@ -125,12 +131,22 @@ const PostContent = ({
         {img}
       </UserPost>
       <UserVote>
-        <UserVoteIcon onClick={() => (userUpVote(), onClickUpVote())}>
+        <UserVoteIcon
+          onClick={() => {
+            userUpVote();
+            onClickUpVote(vote, post.id);
+          }}
+        >
           <i className="fas fa-arrow-up"></i>
           <span>{upVote}</span>
         </UserVoteIcon>
         <i className="fas fa-comment"></i>
-        <UserVoteIcon onClick={() => (userDownVote(), onClickDownVote())}>
+        <UserVoteIcon
+          onClick={() => {
+            userDownVote();
+            onClickDownVote(vote, post.id);
+          }}
+        >
           <i className="fas fa-arrow-down"></i>
           <span>{downVote}</span>
         </UserVoteIcon>
