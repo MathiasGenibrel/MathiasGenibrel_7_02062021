@@ -30,6 +30,7 @@ export const LoggingIn = async (
     return LoggingIn("signIn", user.name, user.password);
 
   const infoUser = await response;
+  if (infoUser.userId === undefined) return false
 
   setCookie("userId", infoUser.userId);
   setCookie("BearerToken", infoUser.token);
