@@ -65,7 +65,8 @@ const DeletePost = styled.div`
 
 const PostContent = ({
   post,
-  userRole,
+  user,
+  userConnected,
   onClickDelete,
   onClickUpVote,
   onClickDownVote,
@@ -79,7 +80,7 @@ const PostContent = ({
   const deletePost =
     post.userId === getCookie("userId") ? (
       <Icon icon={cancelIcon} color="#f4f4f4" height="2.2rem" />
-    ) : userRole === "admin" ? (
+    ) : userConnected.role === "admin" ? (
       <Icon icon={cancelIcon} color="#f4f4f4" height="2.2rem" />
     ) : null;
   const text = post.text ? <p>{post.text}</p> : null;
@@ -115,7 +116,10 @@ const PostContent = ({
   return (
     <Post>
       <UserInfo
-        to={{ pathname: `/main/${post.user.name}`, state: { user: post.user } }}
+        to={{
+          pathname: `/main/${post.user.name}`,
+          state: { user: post.user, userConnected: user },
+        }}
       >
         <UserProfilImg>
           <UserImage role={post.user.role} name={post.user.name} />

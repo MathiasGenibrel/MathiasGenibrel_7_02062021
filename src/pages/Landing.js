@@ -1,4 +1,3 @@
-import PostContent from "../components/PostContent";
 import { getCookie } from "../utils/Cookie";
 import UserImage from "../components/UserImg";
 import React, { useState } from "react";
@@ -10,9 +9,7 @@ import { ROUTES, fetcher } from "../utils/Api";
 import { Icon } from "@iconify/react";
 import featherIcon from "@iconify-icons/fa-solid/feather";
 import usePost from "../hooks/usePost";
-import { deletePost } from "../utils/Post";
-import { upVote, downVote, userVote } from "../utils/Post";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { InfiniteScrollPost } from "../components/InfiniteScrollPost";
 
 const NavContent = styled.nav`
   background-color: var(--third-color);
@@ -71,11 +68,7 @@ const TextEndPage = styled.p`
 const Landing = () => {
   const [user, setUser] = useState({});
   const [offset, setOffset] = useState(0);
-  const [allPost, refetch] = usePost(null, offset);
-
-  const deletePostDisplay = (id) => {
-    refetch(allPost.filter((postId) => postId.id !== id));
-  };
+  const [posts, refetch] = usePost(null, offset);
 
   useEffect(() => {
     fetcher(`${ROUTES.user}/${getCookie("userId")}`, {
@@ -100,25 +93,14 @@ const Landing = () => {
           <i className="fas fa-sign-out-alt"></i>
         </SignOutBtn>
       </NavContent>
-      <InfiniteScroll
-        dataLength={allPost.length}
-        next={() => setOffset(offset + 5)}
-        hasMore={true}
-      >
-        {allPost.map((post) => (
-          <PostContent
-            key={post.id}
-            post={post}
-            userRole={user.role}
-            onClickDelete={() => {
-              deletePost(post.id, user.role);
-              deletePostDisplay(post.id);
-            }}
-            onClickUpVote={(vote, id) => upVote(vote, id)}
-            onClickDownVote={(vote, id) => downVote(vote, id)}
-          />
-        ))}
-      </InfiniteScroll>
+      <InfiniteScrollPost
+        posts={posts}
+        user={user}
+        userConnected={user}
+        refetch={refetch}
+        offset={offset}
+        setOffset={setOffset}
+      ></InfiniteScrollPost>
       <TextEndPage>Plus rien pour aujourd'hui</TextEndPage>
       <AddContent to={{ pathname: `/main/newPost`, state: { user } }}>
         <Icon icon={featherIcon} color="#f4f4f4" height="1.5rem" />

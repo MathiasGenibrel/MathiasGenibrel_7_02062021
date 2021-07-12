@@ -1,6 +1,5 @@
 import { UserInfoProfil } from "../components/UserInfoProfil";
-import { upVote, downVote, deletePost } from "../utils/Post";
-import PostContent from "../components/PostContent";
+import { InfiniteScrollPost } from "../components/InfiniteScrollPost";
 import DeleteLogo from "../components/DeleteLogo";
 import { useLocation } from "react-router-dom";
 import React, { useState } from "react";
@@ -32,12 +31,18 @@ const Navigation = styled.nav`
 const UserProfile = () => {
   const redirect = useHistory();
   const user = useLocation().state.user;
-  const [posts, refetch] = usePost(user.id);
-  const deleteAccountBtn = user.id === getCookie("userId") ? (
-    <DeleteLogo onClick={() => handleClick(user.id)} />
-  ) : <div/>;
+  const userConnected = useLocation().state.userConnected;
 
   const [theme, setTheme] = useState(localStorage.getItem("theme"));
+  const [offset, setOffset] = useState(0);
+  const [posts, refetch] = usePost(user.id, offset);
+
+  const deleteAccountBtn =
+    user.id === getCookie("userId") ? (
+      <DeleteLogo onClick={() => handleClick(user.id)} />
+    ) : (
+      <div />
+    );
 
   const switchMode = () => {
     const changeTheme = theme === "light" ? "dark" : "light";
@@ -60,15 +65,14 @@ const UserProfile = () => {
         <Back angle="180" />
       </Navigation>
       <UserInfoProfil user={user} switchMode={switchMode} theme={theme} />
-      {posts.map((post) => (
-        <PostContent
-          key={post.id}
-          post={post}
-          onClickDelete={() => deletePost(post.id, user.role, refetch)}
-          onClickUpVote={() => upVote(post.votes, post.id, refetch)}
-          onClickDownVote={() => downVote(post.votes, post.id, refetch)}
-        />
-      ))}
+      <InfiniteScrollPost
+        userConnected={userConnected}
+        posts={posts}
+        user={user}
+        refetch={refetch}
+        offset={offset}
+        setOffset={setOffset}
+      ></InfiniteScrollPost>
     </NavUser>
   );
 };

@@ -5,9 +5,9 @@ import { getCookie } from "../utils/Cookie";
 
 const usePost = (userId, offset = 0) => {
   const [posts, setPosts] = useState([]);
-  
+
   let route = `${ROUTES.post}?offset=${offset}`;
-  if (userId) route = `${ROUTES.post}/user/${userId}`;
+  if (userId) route = `${ROUTES.post}/user/${userId}?offset=${offset}`;
 
   const fetchPost = () => {
     fetcher(route, {
