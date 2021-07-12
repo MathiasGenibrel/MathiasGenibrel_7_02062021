@@ -5,6 +5,7 @@ import { Icon } from "@iconify/react";
 import cancelIcon from "@iconify-icons/iconoir/cancel";
 import { getCookie } from "../utils/Cookie";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Post = styled.div`
   margin: 1.5rem 1rem 0 1rem;
@@ -69,6 +70,12 @@ const PostContent = ({
   onClickUpVote,
   onClickDownVote,
 }) => {
+  const [vote, setVote] = useState(
+    post.votes.length === 0 ? "none" : post.votes[0].vote
+  );
+  const [upVote, setUpVote] = useState(post.upVote);
+  const [downVote, setDownVote] = useState(post.downVote);
+
   const deletePost =
     post.userId === getCookie("userId") ? (
       <Icon icon={cancelIcon} color="#f4f4f4" height="2.2rem" />
@@ -83,9 +90,27 @@ const PostContent = ({
     />
   ) : null;
 
+  const userUpVote = () => {
+    if (vote === "upVote") return;
+    if (vote === "none") return setVote("upVote"), setUpVote(upVote + 1);
+    setVote("upVote");
+    setUpVote(upVote + 1);
+    setDownVote(downVote - 1);
+  };
+
+  const userDownVote = () => {
+    if (vote === "downVote") return;
+    if (vote === "none") return setVote("downVote"), setUpVote(upVote - 1);
+    setVote("downVote");
+    setUpVote(upVote - 1);
+    setDownVote(downVote + 1);
+  };
+
   return (
     <Post>
-      <UserInfo to={{ pathname: `/main/${post.user.name}`, state: { user: post.user } }}>
+      <UserInfo
+        to={{ pathname: `/main/${post.user.name}`, state: { user: post.user } }}
+      >
         <UserProfilImg>
           <UserImage role={post.user.role} name={post.user.name} />
         </UserProfilImg>
@@ -100,14 +125,14 @@ const PostContent = ({
         {img}
       </UserPost>
       <UserVote>
-        <UserVoteIcon onClick={onClickUpVote}>
+        <UserVoteIcon onClick={() => (userUpVote(), onClickUpVote())}>
           <i className="fas fa-arrow-up"></i>
-          <span>{post.upVote}</span>
+          <span>{upVote}</span>
         </UserVoteIcon>
         <i className="fas fa-comment"></i>
-        <UserVoteIcon onClick={onClickDownVote}>
+        <UserVoteIcon onClick={() => (userDownVote(), onClickDownVote())}>
           <i className="fas fa-arrow-down"></i>
-          <span>{post.downVote}</span>
+          <span>{downVote}</span>
         </UserVoteIcon>
       </UserVote>
     </Post>

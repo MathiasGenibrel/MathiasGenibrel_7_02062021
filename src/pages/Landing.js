@@ -66,12 +66,16 @@ const TextEndPage = styled.p`
   color: var(--third-color);
   font-size: 1.2rem;
   font-weight: 700;
-`
+`;
 
 const Landing = () => {
   const [user, setUser] = useState({});
   const [offset, setOffset] = useState(0);
   const [allPost, refetch] = usePost(null, offset);
+
+  const deletePostDisplay = (id) => {
+    refetch(allPost.filter((postId) => postId.id !== id));
+  };
 
   useEffect(() => {
     fetcher(`${ROUTES.user}/${getCookie("userId")}`, {
@@ -106,9 +110,12 @@ const Landing = () => {
             key={post.id}
             post={post}
             userRole={user.role}
-            onClickDelete={() => deletePost(post.id, user.role, refetch)}
-            onClickUpVote={() => upVote(post.votes, post.id, refetch)}
-            onClickDownVote={() => downVote(post.votes, post.id, refetch)}
+            onClickDelete={() => {
+              deletePost(post.id, user.role);
+              deletePostDisplay(post.id);
+            }}
+            onClickUpVote={() => upVote(post.votes, post.id)}
+            onClickDownVote={() => downVote(post.votes, post.id)}
           />
         ))}
       </InfiniteScroll>

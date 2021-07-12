@@ -2,16 +2,15 @@ import { fetcher } from "./Api";
 import { ROUTES } from "./Api";
 import { getCookie } from "./Cookie";
 
-export const deletePost = async (id, userRole, refetch) => {
+export const deletePost = async (id, userRole) => {
   const route = userRole === "admin" ? `${ROUTES.post}/admin/${id}` : `${ROUTES.post}/${id}`
   await fetcher(route, {
     method: "DELETE",
     headers: { authorization: `Bearer ${getCookie("BearerToken")}` },
   });
-  refetch();
 };
 
-const userVote = async (vote, id, refetch) => {
+const userVote = async (vote, id) => {
   await fetcher(`${ROUTES.post}/${id}/vote`, {
     method: "PUT",
     headers: {
@@ -20,7 +19,6 @@ const userVote = async (vote, id, refetch) => {
     },
     body: JSON.stringify({ vote: vote }),
   });
-  refetch();
 };
 
 export const upVote = (votes, id, refetch) => {

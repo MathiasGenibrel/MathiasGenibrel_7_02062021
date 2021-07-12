@@ -22,7 +22,7 @@ const usePost = (userId, offset = 0) => {
     fetchPost();
   }, [offset]);
 
-  return [posts, fetchPost];
+  return [posts, setPosts];
 };
 
 export default usePost;
