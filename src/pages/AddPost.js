@@ -55,24 +55,26 @@ const Title = styled.h2`
 export default function AddPost() {
   const userInfo = useLocation().state.user;
   const [textPost, setTextPost] = useState("");
+  const [dataImg, setDataImg] = useState({});
   const [inputImg, setInputImg] = useState("Ajoute une image");
   const redirect = useHistory();
 
-  const sendPost = async () => {
+  const sendPost = () => {
+    const dataPost = new FormData();
+
+    dataPost.append("text", textPost);
+    dataPost.append("imgUrl", dataImg);
+
     if (textPost === "" && inputImg === "Ajoute une image") return false;
 
-    await fetcher(`${ROUTES.post}`, {
+    fetcher(`${ROUTES.post}`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         authorization: `Bearer ${getCookie("BearerToken")}`,
       },
-      body: JSON.stringify({
-        text: textPost,
-        imgUrl: inputImg === "Ajoute une image" ? null : inputImg,
-      }),
+      body: dataPost,
     });
-    redirect.push("/main");
+    return redirect.push("/main");
   };
 
   const handlePostChange = (e) => {
@@ -80,8 +82,11 @@ export default function AddPost() {
   };
 
   const handleInputImg = (e) => {
-    if (e.target.value === "") return;
-    setInputImg(e.target.value);
+    if (e.target.files[0] === "") return;
+    setInputImg(
+      e.target.files.length === 0 ? "Ajoute une image" : e.target.files[0].name
+    );
+    setDataImg(e.target.files[0]);
   };
 
   return (
@@ -93,16 +98,16 @@ export default function AddPost() {
           <Icon icon={cancelIcon} color="#f4f4f4" height="2.2rem" />
         </Link>
       </NavContent>
-      <UserNewPost
-        userInfo={userInfo}
-        handlePostChange={handlePostChange}
-        handleInputImg={handleInputImg}
-        textPost={textPost}
-        inputImg={inputImg}
-      />
-      <UserSendPostBtn onClick={sendPost}>
-        <UserSendPostBtnIcon icon={send16Filled} height="2rem" />
-      </UserSendPostBtn>
+        <UserNewPost
+          userInfo={userInfo}
+          handlePostChange={handlePostChange}
+          handleInputImg={handleInputImg}
+          textPost={textPost}
+          inputImg={inputImg}
+        />
+        <UserSendPostBtn onClick={sendPost}>
+          <UserSendPostBtnIcon icon={send16Filled} height="2rem" />
+        </UserSendPostBtn>
     </NewPostContent>
   );
 }

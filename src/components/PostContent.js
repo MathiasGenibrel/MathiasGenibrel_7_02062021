@@ -63,6 +63,18 @@ const DeletePost = styled.div`
   color: #f4f4f4;
 `;
 
+const ImgPost = styled.img`
+  width: 100%;
+  max-height: 280px;
+  object-fit: cover;
+  margin: 1rem 0 .5rem 0;
+  border-radius: .5rem;
+`
+
+const TextPost = styled.p`
+  overflow-wrap: break-word;
+`
+
 const PostContent = ({
   post,
   user,
@@ -83,10 +95,10 @@ const PostContent = ({
     ) : userConnected.role === "admin" ? (
       <Icon icon={cancelIcon} color="#f4f4f4" height="2.2rem" />
     ) : null;
-  const text = post.text ? <p>{post.text}</p> : null;
+  const text = post.text ? <TextPost>{post.text}</TextPost> : null;
   const img = post.imgUrl ? (
-    <img
-      src={require(`../assets/img/${post.imgUrl}`).default}
+    <ImgPost
+      src={require(`../../public/img/${post.imgUrl}`).default}
       alt={`Utilisateur : ${post.user.name}`}
     />
   ) : null;

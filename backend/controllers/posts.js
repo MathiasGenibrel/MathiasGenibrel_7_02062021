@@ -4,6 +4,7 @@ const POSTS = DB.posts;
 const VOTES = DB.votes;
 
 exports.create = (req, res) => {
+  console.log(req.body);
   if (!req.body.text && !req.body.img_url) {
     res.status(400).send({
       message: "Content cannot be empty!",
@@ -21,6 +22,7 @@ exports.create = (req, res) => {
     text: req.body.text,
     imgUrl: req.body.imgUrl,
     userId: getIdUser(req),
+    imgUrl: req.file ? req.file.filename : null,
   };
 
   POSTS.create(post)

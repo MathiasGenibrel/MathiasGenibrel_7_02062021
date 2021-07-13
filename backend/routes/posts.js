@@ -1,5 +1,6 @@
 const auth = require("../middleware/auth");
 const admin = require("../middleware/isAdmin");
+const multer = require("../middleware/multer-config")
 const cors = require("cors");
 
 module.exports = (app) => {
@@ -8,7 +9,7 @@ module.exports = (app) => {
   const router = require("express").Router();
 
   router.put("/:id/vote", auth, Posts.userVote);
-  router.post("/", auth, Posts.create);
+  router.post("/", auth, multer, Posts.create);
 
   router.get("/user/:id", auth, Posts.findAllByUserId);
   router.get("/:id", auth, Posts.findOne);

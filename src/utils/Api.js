@@ -12,5 +12,9 @@ export const ROUTES = {
 export const fetcher = async (url, options = {}) => {
   const response = await fetch(url, options);
 
-  return response.json();
+  const test = await response.json()
+
+  console.log(test)
+
+  return test;
 };
