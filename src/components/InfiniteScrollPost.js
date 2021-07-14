@@ -30,8 +30,8 @@ export const InfiniteScrollPost = ({
           post={post}
           user={user}
           onClickDelete={() => {
-            deletePost(post.id, user.role);
             deletePostDisplay(post.id);
+            deletePost(post.id, user.role);
           }}
           onClickUpVote={(vote, id) => upVote(vote, id)}
           onClickDownVote={(vote, id) => downVote(vote, id)}

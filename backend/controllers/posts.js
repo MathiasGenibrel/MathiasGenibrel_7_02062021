@@ -1,5 +1,6 @@
 const getIdUser = require("../utils/decodeToken");
 const DB = require("../models");
+const fs = require("fs");
 const POSTS = DB.posts;
 const VOTES = DB.votes;
 
@@ -230,6 +231,16 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
+  const post = async () => {
+    const postContent = await POSTS.findByPk(id);
+    return postContent.imgUrl;
+  };
+
+  (async () =>
+    fs.unlink(`../public/img/${await post()}`, (err) => {
+      if (err) return res.send({ message: err });
+    }))();
+
   POSTS.destroy({
     where: { id, userId: getIdUser(req) },
   })
@@ -253,7 +264,16 @@ exports.delete = (req, res) => {
 
 exports.adminDelete = (req, res) => {
   const id = req.params.id;
-  console.log(id);
+
+  const post = async () => {
+    const postContent = await POSTS.findByPk(id);
+    return postContent.imgUrl;
+  };
+
+  (async () =>
+    fs.unlink(`../public/img/${await post()}`, (err) => {
+      if (err) return res.send({ message: err });
+    }))();
 
   POSTS.destroy({
     where: { id },
