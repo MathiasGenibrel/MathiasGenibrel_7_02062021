@@ -37,6 +37,7 @@ const UserName = styled.p`
   font-size: 1.2rem;
   font-weight: 700;
   margin-bottom: 0.4rem;
+  text-transform: capitalize;
 `;
 
 const UserDescription = styled.p`

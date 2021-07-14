@@ -35,6 +35,7 @@ const UserProfilText = styled.div`
 const UserProfilName = styled.h3`
   font-size: 1.2rem;
   font-weight: 700;
+  text-transform: capitalize;
 `;
 
 const UserPost = styled.div`
