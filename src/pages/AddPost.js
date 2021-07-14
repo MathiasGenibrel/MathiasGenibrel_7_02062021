@@ -74,7 +74,7 @@ export default function AddPost() {
       },
       body: dataPost,
     });
-    return redirect.push("/main");
+    redirect.push("/main");
   };
 
   const handlePostChange = (e) => {
