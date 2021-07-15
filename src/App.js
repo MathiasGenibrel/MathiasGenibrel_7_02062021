@@ -1,21 +1,36 @@
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
   Switch,
   Redirect,
 } from "react-router-dom";
+import styled from "styled-components";
+import { ThemeProvider } from "styled-components";
+
 import UserProfile from "./pages/UserProfile";
 import NotFound from "./pages/NotFound";
 import Landing from "./pages/Landing";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
-import React from "react";
 import AddPost from "./pages/AddPost";
-import styled from "styled-components";
+
 import backgroundImgLight from "./assets/img/Background_texture_light.jpg";
 import backgroundImgDark from "./assets/img/Background_texture_dark.jpg";
 
-const theme = localStorage.getItem("theme") === "light" ? backgroundImgLight : backgroundImgDark
+const lightTheme = {
+  backgroundImg: backgroundImgLight,
+  primaryColor: "#F4F4F4",
+  secondColor: "#FF9233",
+  thirdColor: "#011827",
+};
+
+const darkTheme = {
+  backgroundImg: backgroundImgDark,
+  primaryColor: "#333333",
+  secondColor: "#CFD7C7",
+  thirdColor: "#4E9EA6",
+};
 
 const AppContent = styled.div`
   font-family: "roboto", sans-serif;
@@ -27,7 +42,8 @@ const AppContent = styled.div`
   height: 100%;
   min-height: 100vh;
   &::before {
-    background: scroll left/50px url(${theme});
+    background: ${({ theme }) =>
+      `scroll left/50px url(${theme.backgroundImg})`};
     content: "";
     height: 100%;
     top: 0;
@@ -40,34 +56,47 @@ const AppContent = styled.div`
 `;
 
 const App = () => {
+  // initialize with user preferecences form browser
+  const [theme, setTheme] = useState(() => lightTheme);
+
+  useEffect(() => {
+    if (localStorage.getItem("theme")) {
+      setTheme(
+        localStorage.getItem("theme") === "light" ? lightTheme : darkTheme
+      );
+    }
+  }, [setTheme]);
+
   return (
-    <AppContent>
-      <Router>
-        <Switch>
-          <Route
-            path="/"
-            exact
-            render={() => {
-              return <Redirect to="/auth/SignIn" />;
-            }}
-          />
-          <Route
-            path="/auth/:slug"
-            render={({ match }) => {
-              if (match.params.slug.toLowerCase() === "signin")
-                return <SignIn />;
-              if (match.params.slug.toLowerCase() === "signup")
-                return <SignUp />;
-              return <NotFound />;
-            }}
-          />
-          <Route path="/main" exact component={Landing} />
-          <Route path="/main/newPost" component={AddPost} />
-          <Route path="/main/:slug" component={UserProfile} />
-          <Route path="/" component={NotFound} />
-        </Switch>
-      </Router>
-    </AppContent>
+    <ThemeProvider theme={theme}>
+      <AppContent>
+        <Router>
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={() => {
+                return <Redirect to="/auth/SignIn" />;
+              }}
+            />
+            <Route
+              path="/auth/:slug"
+              render={({ match }) => {
+                if (match.params.slug.toLowerCase() === "signin")
+                  return <SignIn />;
+                if (match.params.slug.toLowerCase() === "signup")
+                  return <SignUp />;
+                return <NotFound />;
+              }}
+            />
+            <Route path="/main" exact component={Landing} />
+            <Route path="/main/newPost" component={AddPost} />
+            <Route path="/main/:slug" component={UserProfile} />
+            <Route path="/" component={NotFound} />
+          </Switch>
+        </Router>
+      </AppContent>
+    </ThemeProvider>
   );
 };
 export default App;
