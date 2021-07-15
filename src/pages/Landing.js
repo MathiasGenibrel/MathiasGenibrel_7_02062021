@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { ROUTES, fetcher } from "../utils/Api";
 import { Icon } from "@iconify/react";
 import featherIcon from "@iconify-icons/fa-solid/feather";
-import usePost from "../hooks/usePost";
+import usePosts from "../hooks/usePosts";
 import { InfiniteScrollPost } from "../components/InfiniteScrollPost";
 
 const NavContent = styled.nav`
@@ -68,7 +68,7 @@ const TextEndPage = styled.p`
 const Landing = () => {
   const [user, setUser] = useState({});
   const [offset, setOffset] = useState(0);
-  const [posts, refetch] = usePost(null, offset);
+  const [posts, refetch] = usePosts(offset);
 
   useEffect(() => {
     fetcher(`${ROUTES.user}/${getCookie("userId")}`, {

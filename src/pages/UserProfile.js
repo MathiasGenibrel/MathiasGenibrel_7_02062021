@@ -3,7 +3,7 @@ import { InfiniteScrollPost } from "../components/InfiniteScrollPost";
 import DeleteLogo from "../components/DeleteLogo";
 import { useLocation } from "react-router-dom";
 import React, { useState } from "react";
-import usePost from "../hooks/usePost";
+import useUserPosts from "../hooks/useUserPosts";
 import styled from "styled-components";
 import Back from "../components/Back";
 import { deleteAccount, SignOut } from "../utils/Auth";
@@ -35,7 +35,7 @@ const UserProfile = () => {
 
   const [theme, setTheme] = useState(localStorage.getItem("theme"));
   const [offset, setOffset] = useState(0);
-  const [posts, refetch] = usePost(user.id, offset);
+  const [posts, refetch] = useUserPosts(user.id, offset);
 
   const deleteAccountBtn =
     user.id === getCookie("userId") ? (
@@ -62,8 +62,8 @@ const UserProfile = () => {
   return (
     <NavUser>
       <Navigation>
+        <Back />
         {deleteAccountBtn}
-        <Back angle="180" />
       </Navigation>
       <UserInfoProfil user={user} switchMode={switchMode} theme={theme} />
       <InfiniteScrollPost
