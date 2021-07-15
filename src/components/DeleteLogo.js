@@ -5,7 +5,7 @@ const DeleteIcon = styled.svg`
   position: relative;
   right: 0;
   bottom: 0;
-  color: var(--second-color);
+  color: ${props => props.theme.secondColor}
 `;
 
 const DeleteLogo = ({ height = "1.4rem", onClick }) => {

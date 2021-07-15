@@ -17,26 +17,26 @@ const SignContent = styled.div`
   border: 1.5px solid #011827;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
-  background-color: var(--second-color);
+  background-color: ${(props) => props.theme.secondColor};
   height: fit-content;
   margin: auto 0;
 `;
 
 const SignUpLink = styled.span`
-  color: var(--primary-color);
+  color: ${(props) => props.theme.primaryColor};
   text-decoration: none;
   font-weight: 500;
   font-size: 1.3rem;
 `;
 
 const SignIn = () => {
-  localStorage.setItem("theme", "light");
+  if (!localStorage.getItem("theme")) localStorage.setItem("theme", "light");
   const { slug } = useParams();
   const redirect = useHistory();
 
   const handleKeydown = (e) => {
-    if (e.key === "Enter") handleClick()
-  }
+    if (e.key === "Enter") handleClick();
+  };
 
   const handleClick = async () => {
     const userLogin = await LoggingIn(slug, username, password);

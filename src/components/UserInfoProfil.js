@@ -6,15 +6,15 @@ import { getCookie } from "../utils/Cookie";
 
 const UserInfo = styled.div`
   position: relative;
-  color: var(--third-color);
-  background-color: var(--primary-color);
+  color: ${(props) => props.theme.thirdColor};
+  background-color: ${(props) => props.theme.primaryColor};
   padding: 3.3rem 0 0.3rem 0;
-  border-bottom: solid var(--second-color);
+  border-bottom: solid ${(props) => props.theme.secondColor};
 `;
 
 const UserIconPosition = styled.div`
   position: absolute;
-  border: solid var(--primary-color) 7px;
+  border: solid ${(props) => props.theme.primaryColor} 7px;
   border-radius: 50%;
   top: -40px;
   left: calc(50% - (65px + 7px * 2) / 2);
@@ -52,7 +52,7 @@ const LightMode = styled.div`
   height: 2.5rem;
   width: 2.5rem;
   border-radius: 50%;
-  border: solid var(--second-color) 2px;
+  border: solid ${(props) => props.theme.secondColor} 2px;
   display: flex;
   align-items: center;
   justify-content: center;

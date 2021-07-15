@@ -10,8 +10,8 @@ import { useState } from "react";
 const Post = styled.div`
   margin: 1.5rem 1rem 0 1rem;
   padding: 0.5rem;
-  background-color: var(--second-color);
-  color: var(--primary-color);
+  background-color: ${(props) => props.theme.secondColor};
+  color: ${(props) => props.theme.primaryColor};
   border-radius: 1rem;
   position: relative;
 `;
@@ -19,7 +19,7 @@ const Post = styled.div`
 const UserInfo = styled(Link)`
   display: flex;
   margin: 0.7rem 0.5rem 1.3rem 0.5rem;
-  color: var(--primary-color);
+  color: ${(props) => props.theme.primaryColor};
 `;
 
 const UserProfilImg = styled.div`
@@ -68,13 +68,13 @@ const ImgPost = styled.img`
   width: 100%;
   max-height: 280px;
   object-fit: cover;
-  margin: 1rem 0 .5rem 0;
-  border-radius: .5rem;
-`
+  margin: 1rem 0 0.5rem 0;
+  border-radius: 0.5rem;
+`;
 
 const TextPost = styled.p`
   overflow-wrap: break-word;
-`
+`;
 
 const PostContent = ({
   post,

@@ -10,8 +10,8 @@ import { Icon } from "@iconify/react";
 import styled from "styled-components";
 
 const NavContent = styled.nav`
-  background-color: var(--third-color);
-  color: var(--primary-color);
+  background-color: ${(props) => props.theme.thirdColor};
+  color: ${(props) => props.theme.primaryColor};
   justify-content: space-around;
   align-items: center;
   height: 4.4rem;
@@ -27,8 +27,8 @@ const NewPostContent = styled.div`
 
 const UserSendPostBtn = styled.div`
   position: absolute;
-  color: var(--primary-color);
-  background-color: var(--third-color);
+  color: ${(props) => props.theme.primaryColor};
+  background-color: ${(props) => props.theme.thirdColor};
   padding: 0.8rem;
   border-radius: 50%;
   width: 2.3rem;
@@ -36,7 +36,7 @@ const UserSendPostBtn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: solid var(--second-color);
+  border: solid ${(props) => props.theme.secondColor};
   box-shadow: 2.5px 5px 8px rgba(0, 0, 0, 0.3);
   bottom: 2rem;
   right: 2.5rem;

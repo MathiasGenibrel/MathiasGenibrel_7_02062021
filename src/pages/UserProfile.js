@@ -20,7 +20,7 @@ const NavUser = styled.div`
 `;
 
 const Navigation = styled.nav`
-  background-color: var(--third-color);
+  background-color: ${(props) => props.theme.thirdColor};
   justify-content: space-between;
   align-items: center;
   padding: 0 2.5rem;
@@ -48,6 +48,7 @@ const UserProfile = () => {
     const changeTheme = theme === "light" ? "dark" : "light";
     setTheme(changeTheme);
     localStorage.setItem("theme", changeTheme);
+    window.location.reload(false);
   };
 
   const handleClick = async (id) => {

@@ -4,15 +4,20 @@ import styled from "styled-components";
 const LogoSvg = styled.div`
   position: relative;
   padding: 0 0 calc(var(--spacing) / 2) 0;
-`
+`;
 const LogoTitle = styled.h1`
   position: absolute;
   bottom: 0.5rem;
   font-size: 1.3rem;
   font-weight: 700;
-`
+  color: ${(props) => props.theme.primaryColor};
+`;
 
-const Logo = ({height = "80px", color = "var(--primary-color)"}) => {
+const ColorLogo = styled.g`
+  fill: ${(props) => props.theme.primaryColor};
+`;
+
+const Logo = ({ height = "80px" }) => {
   return (
     <LogoSvg>
       <svg
@@ -21,10 +26,9 @@ const Logo = ({height = "80px", color = "var(--primary-color)"}) => {
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 300 300"
       >
-        <g
+        <ColorLogo
           data-v-1084b650=""
           id="640fb903-7c97-3a8b-d0a7-369102908d0a"
-          fill={color}
           stroke="none"
           transform="matrix(0.8499999999999999,0,0,0.8499999999999999,22.500006484985377,22.50005836486818)"
         >
@@ -35,9 +39,9 @@ const Logo = ({height = "80px", color = "var(--primary-color)"}) => {
               </g>
             </switch>
           </svg>
-        </g>
+        </ColorLogo>
       </svg>
-      <LogoTitle style={color={color}}>GROUPOMANIA</LogoTitle>
+      <LogoTitle>GROUPOMANIA</LogoTitle>
     </LogoSvg>
   );
 };

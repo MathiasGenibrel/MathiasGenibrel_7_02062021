@@ -12,7 +12,10 @@ import SignIn from "./pages/SignIn";
 import React from "react";
 import AddPost from "./pages/AddPost";
 import styled from "styled-components";
-import backgroundImg from "./assets/img/Background_texture.jpg";
+import backgroundImgLight from "./assets/img/Background_texture_light.jpg";
+import backgroundImgDark from "./assets/img/Background_texture_dark.jpg";
+
+const theme = localStorage.getItem("theme") === "light" ? backgroundImgLight : backgroundImgDark
 
 const AppContent = styled.div`
   font-family: "roboto", sans-serif;
@@ -24,10 +27,9 @@ const AppContent = styled.div`
   height: 100%;
   min-height: 100vh;
   &::before {
-    background: scroll left/50px url(${backgroundImg});
+    background: scroll left/50px url(${theme});
     content: "";
     height: 100%;
-    opacity: 0.08;
     top: 0;
     left: 0;
     bottom: 0;

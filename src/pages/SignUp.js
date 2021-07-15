@@ -18,7 +18,7 @@ const SignContent = styled.div`
   border: 1.5px solid #011827;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
   border-radius: 25px;
-  background-color: var(--second-color);
+  background-color: ${(props) => props.theme.secondColor};
   height: fit-content;
   margin: auto 0;
 `;

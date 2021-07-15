@@ -5,7 +5,7 @@ import UserImage from "../components/UserImg";
 import { Icon } from "@iconify/react";
 
 const UserPost = styled.div`
-  background-color: var(--second-color);
+  background-color: ${(props) => props.theme.secondColor};
   margin: 1.5rem 1rem 8rem;
   padding: 1.5rem 0.8rem;
   border-radius: 1rem;
@@ -26,18 +26,18 @@ const UserImg = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  color: var(--primary-color);
+  color: ${(props) => props.theme.primaryColor};
 `;
 
 const UserInput = styled.textarea`
-  background-color: var(--second-color);
-  color: var(--primary-color);
+  background-color: ${(props) => props.theme.secondColor};
+  color: ${(props) => props.theme.primaryColor};
   padding: 1rem 0.5rem 0 1rem;
   height: 100%;
   width: 100%;
   resize: none;
   &::placeholder {
-    color: var(--primary-color);
+    color: ${(props) => props.theme.primaryColor};
   }
 `;
 
@@ -53,7 +53,7 @@ const UserInputImgText = styled.p`
 `;
 
 const UserLabelImg = styled.label`
-  background-color: var(--third-color);
+  background-color: ${(props) => props.theme.thirdColor};
   display: flex;
   padding: 1rem;
   width: 12rem;

@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const Icon = styled.i`
   /* position: absolute; */
-  color: var(--primary-color);
+  color: ${props => props.theme.primaryColor};
   font-size: 1.8rem;
 `;
 
