@@ -99,7 +99,7 @@ const PostContent = ({
   const text = post.text ? <TextPost>{post.text}</TextPost> : null;
   const img = post.imgUrl ? (
     <ImgPost
-      src={require(`../../public/img/${post.imgUrl}`).default}
+      src={post.imgUrl}
       alt={`Utilisateur : ${post.user.name}`}
     />
   ) : null;

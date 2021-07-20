@@ -8,7 +8,9 @@ exports.create = (req, res) => {
   const post = {
     text: req.body.text,
     userId: getIdUser(req),
-    imgUrl: req.file ? req.file.filename : null,
+    imgUrl: req.file
+      ? ` ${req.protocol}://${req.get("host")}/assets/img/${req.file.filename}`
+      : null,
   };
 
   if (!post.text && !post.imgUrl) {
@@ -231,13 +233,13 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  const post = async () => {
+  const imgUrl = async () => {
     const postContent = await POSTS.findByPk(id);
     return postContent.imgUrl;
   };
 
   (async () =>
-    fs.unlink(`../public/img/${await post()}`, (err) => {
+    fs.unlink(`${await imgUrl()}`, (err) => {
       if (err) return res.send({ message: err });
     }))();
 
@@ -265,13 +267,13 @@ exports.delete = (req, res) => {
 exports.adminDelete = (req, res) => {
   const id = req.params.id;
 
-  const post = async () => {
+  const imgUrl = async () => {
     const postContent = await POSTS.findByPk(id);
-    return postContent.imgUrl;
+    return postContent.imgUrl.split("/assets/img/")[1];
   };
 
   (async () =>
-    fs.unlink(`../public/img/${await post()}`, (err) => {
+    fs.unlink(`assets/img/${await imgUrl()}`, (err) => {
       if (err) return res.send({ message: err });
     }))();
 

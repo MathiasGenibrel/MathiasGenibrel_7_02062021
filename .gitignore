@@ -10,7 +10,7 @@ icon-left-font.png
 icon-left-font.svg
 icon.png
 
-public/img
+backend/assets
 SQL
 
 node_modules

@@ -2,7 +2,7 @@ const multer = require("multer");
 
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
-    callback(null, "../public/img");
+    callback(null, "./assets/img");
   },
   filename: (req, file, callback) => {
     const name = file.originalname.split(" ").join("_");

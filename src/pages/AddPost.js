@@ -59,7 +59,7 @@ export default function AddPost() {
   const [inputImg, setInputImg] = useState("Ajoute une image");
   const redirect = useHistory();
 
-  const sendPost = () => {
+  const sendPost = async () => {
     const dataPost = new FormData();
 
     dataPost.append("text", textPost);
@@ -67,7 +67,7 @@ export default function AddPost() {
 
     if (textPost === "" && inputImg === "Ajoute une image") return false;
 
-    fetcher(`${ROUTES.post}`, {
+    await fetcher(`${ROUTES.post}`, {
       method: "POST",
       headers: {
         authorization: `Bearer ${getCookie("BearerToken")}`,
