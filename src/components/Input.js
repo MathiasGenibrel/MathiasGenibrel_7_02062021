@@ -3,9 +3,9 @@ import styled from "styled-components";
 
 const InputText = styled.label`
   color: ${(props) => props.theme.primaryColor};
+  margin: calc(var(--spacing) * 1) 0 0.3rem 0.5rem;
   font-size: 0.9rem;
   font-weight: 500;
-  margin: calc(var(--spacing) * 1) 0 0.3rem 0.5rem;
   text-align: left;
 `;
 

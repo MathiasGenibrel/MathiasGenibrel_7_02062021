@@ -96,34 +96,33 @@ exports.findOne = (req, res) => {
 };
 
 exports.update = (req, res) => {
-  const id = req.params.id;
-
   Users.update(req.body, {
-    where: { id, userId: getIdUser(req) },
+    where: { id: getIdUser(req) },
   })
     .then((execute) => {
       if (execute == 1) {
         return res.send({
           message: "User was updated successfully.",
+          status: 200,
         });
       }
 
-      res.send({
+      res.status(400).send({
         message: `Cannot update user with id=${id}. Maybe user was not found or req.body is empty!`,
+        status: 400,
       });
     })
     .catch((err) => {
       res.status(500).send({
-        message: "Error updating user with id=" + id,
+        message: "Error updating user with id = " + id,
+        status: 500,
       });
     });
 };
 
 exports.delete = (req, res) => {
-  const id = req.params.id;
-
   Users.destroy({
-    where: { id },
+    where: { id: getIdUser(req) },
   })
     .then((execute) => {
       if (execute == 1) {

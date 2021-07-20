@@ -47,15 +47,15 @@ const SignUp = () => {
   };
 
   const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+    setUsername(e.target.value.trimStart());
   };
 
   const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
+    setPassword(e.target.value.trim());
   };
   
   const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value);
+    setConfirmPassword(e.target.value.trim());
   };
 
   return (

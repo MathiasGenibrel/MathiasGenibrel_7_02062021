@@ -3,6 +3,9 @@ import SwitchLightMode from "../components/lightMode";
 import React from "react";
 import styled from "styled-components";
 import { getCookie } from "../utils/Cookie";
+import { Link } from "react-router-dom";
+import { Icon } from "@iconify/react";
+import editIcon from "@iconify-icons/ci/edit";
 
 const UserInfo = styled.div`
   position: relative;
@@ -58,7 +61,32 @@ const LightMode = styled.div`
   justify-content: center;
 `;
 
+const EditProfile = styled(Link)`
+  position: absolute;
+  color: ${({ theme }) => theme.thirdColor};
+  border: solid ${({ theme }) => theme.secondColor} 2px;
+  border-radius: 50%;
+  height: 2.5rem;
+  width: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 1rem;
+  left: 2rem;
+`;
+
+const EditProfileIcon = styled(Icon)`
+  font-size: 1.5rem;
+`;
+
 export const UserInfoProfil = ({ user, switchMode, theme }) => {
+  const editProfile =
+    user.id === getCookie("userId") ? (
+      <EditProfile to={{ pathname: `/main/${user.name}/edit`, state: { user } }}>
+        <EditProfileIcon icon={editIcon} />
+      </EditProfile>
+    ) : null;
+
   const switchModeBtn =
     user.id === getCookie("userId") ? (
       <LightMode onClick={switchMode}>
@@ -71,6 +99,7 @@ export const UserInfoProfil = ({ user, switchMode, theme }) => {
       <UserIconPosition>
         <UserImage role={user.role} name={user.name} height="65px" />
       </UserIconPosition>
+      {editProfile}
       {switchModeBtn}
       <UserName>{user.name}</UserName>
       <UserDescription>{user.description}</UserDescription>

@@ -77,16 +77,16 @@ export default function AddPost() {
     redirect.push("/main");
   };
 
-  const handlePostChange = (e) => {
-    setTextPost(e.target.value);
+  const handlePostChange = ({ target: { value } }) => {
+    setTextPost(value);
   };
 
-  const handleInputImg = (e) => {
-    if (e.target.files[0] === "") return;
+  const handleInputImg = ({ target: { files } }) => {
+    if (files[0] === "") return;
     setInputImg(
-      e.target.files.length === 0 ? "Ajoute une image" : e.target.files[0].name
+      files.length === 0 ? "Ajoute une image" : files[0].name
     );
-    setDataImg(e.target.files[0]);
+    setDataImg(files[0]);
   };
 
   return (
@@ -98,16 +98,16 @@ export default function AddPost() {
           <Icon icon={cancelIcon} color="#f4f4f4" height="2.2rem" />
         </Link>
       </NavContent>
-        <UserNewPost
-          userInfo={userInfo}
-          handlePostChange={handlePostChange}
-          handleInputImg={handleInputImg}
-          textPost={textPost}
-          inputImg={inputImg}
-        />
-        <UserSendPostBtn onClick={sendPost}>
-          <UserSendPostBtnIcon icon={send16Filled} height="2rem" />
-        </UserSendPostBtn>
+      <UserNewPost
+        userInfo={userInfo}
+        handlePostChange={handlePostChange}
+        handleInputImg={handleInputImg}
+        textPost={textPost}
+        inputImg={inputImg}
+      />
+      <UserSendPostBtn onClick={sendPost}>
+        <UserSendPostBtnIcon icon={send16Filled} height="2rem" />
+      </UserSendPostBtn>
     </NewPostContent>
   );
 }

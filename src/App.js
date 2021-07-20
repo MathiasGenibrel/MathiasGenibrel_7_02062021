@@ -9,6 +9,7 @@ import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
 
 import UserProfile from "./pages/UserProfile";
+import UserEditProfile from "./pages/UserEditProfile";
 import NotFound from "./pages/NotFound";
 import Landing from "./pages/Landing";
 import SignUp from "./pages/SignUp";
@@ -91,6 +92,7 @@ const App = () => {
             />
             <Route path="/main" exact component={Landing} />
             <Route path="/main/newPost" component={AddPost} />
+            <Route path="/main/:slug/edit" component={UserEditProfile} />
             <Route path="/main/:slug" component={UserProfile} />
             <Route path="/" component={NotFound} />
           </Switch>
