@@ -3,17 +3,13 @@ const DB = require("../models");
 const COMMENTS = DB.comments;
 
 exports.create = (req, res) => {
+  console.log(req.body)
   if (!req.body.comment) {
     return res.status(400).send({
       message: "body cannot be empty!",
     });
   }
-  if (!req.body.userId) {
-    return res.status(400).send({
-      message: "No userId was received",
-    });
-  }
-  if (!req.query.id) {
+  if (!getIdUser(req)) {
     return res.status(400).send({
       message: "Empty post id has been received !",
     });
@@ -21,8 +17,8 @@ exports.create = (req, res) => {
 
   const comment = {
     comment: req.body.comment,
+    postId: req.body.postId,
     userId: getIdUser(req),
-    postId: req.query.id,
   };
 
   COMMENTS.create(comment)

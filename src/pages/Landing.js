@@ -12,8 +12,8 @@ import usePosts from "../hooks/usePosts";
 import { InfiniteScrollPost } from "../components/InfiniteScrollPost";
 
 const NavContent = styled.nav`
-  background-color: ${props => props.theme.thirdColor};
-  color: ${props => props.theme.primaryColor};
+  background-color: ${(props) => props.theme.thirdColor};
+  color: ${(props) => props.theme.primaryColor};
   justify-content: space-around;
   align-items: center;
   position: fixed;
@@ -33,9 +33,9 @@ const Content = styled.div`
 `;
 
 const AddContent = styled(Link)`
-  background-color: ${props => props.theme.thirdColor};
+  background-color: ${(props) => props.theme.thirdColor};
   border-radius: 50%;
-  border: solid 0.2rem ${props => props.theme.secondColor};
+  border: solid 0.2rem ${(props) => props.theme.secondColor};
   height: 3rem;
   width: 3rem;
   bottom: 2rem;
@@ -52,7 +52,7 @@ const Title = styled.h2`
 `;
 
 const SignOutBtn = styled(Link)`
-  color: ${props => props.theme.primaryColor};
+  color: ${(props) => props.theme.primaryColor};
   font-size: 1.4rem;
 `;
 
@@ -60,7 +60,7 @@ const TextEndPage = styled.p`
   position: absolute;
   bottom: 2.8rem;
   left: 2rem;
-  color: ${props => props.theme.thirdColor};
+  color: ${(props) => props.theme.thirdColor};
   font-size: 1.2rem;
   font-weight: 700;
 `;

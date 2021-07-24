@@ -5,7 +5,8 @@ import { Icon } from "@iconify/react";
 import cancelIcon from "@iconify-icons/iconoir/cancel";
 import { getCookie } from "../utils/Cookie";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Comment } from "./Comment";
 
 const Post = styled.div`
   margin: 1.5rem 1rem 0 1rem;
@@ -75,7 +76,6 @@ const ImgPost = styled.img`
 const TextPost = styled.p`
   overflow-wrap: break-word;
 `;
-
 const PostContent = ({
   post,
   user,
@@ -89,6 +89,8 @@ const PostContent = ({
   );
   const [upVote, setUpVote] = useState(post.upVote);
   const [downVote, setDownVote] = useState(post.downVote);
+  const [postComment, setPostComment] = useState(post.comments);
+  const [comment, setComment] = useState(false);
 
   const deletePost =
     post.userId === getCookie("userId") ? (
@@ -98,10 +100,7 @@ const PostContent = ({
     ) : null;
   const text = post.text ? <TextPost>{post.text}</TextPost> : null;
   const img = post.imgUrl ? (
-    <ImgPost
-      src={post.imgUrl}
-      alt={`Utilisateur : ${post.user.name}`}
-    />
+    <ImgPost src={post.imgUrl} alt={`Utilisateur : ${post.user.name}`} />
   ) : null;
 
   const userUpVote = () => {
@@ -124,6 +123,11 @@ const PostContent = ({
     setVote("downVote");
     setUpVote(upVote - 1);
     setDownVote(downVote + 1);
+  };
+
+  const commentDisplay = () => {
+    if (comment !== false) return setComment(false);
+    setComment(true);
   };
 
   return (
@@ -157,7 +161,7 @@ const PostContent = ({
           <i className="fas fa-arrow-up"></i>
           <span>{upVote}</span>
         </UserVoteIcon>
-        <i className="fas fa-comment"></i>
+        <i className="fas fa-comment" onClick={commentDisplay}></i>
         <UserVoteIcon
           onClick={() => {
             userDownVote();
@@ -168,6 +172,14 @@ const PostContent = ({
           <span>{downVote}</span>
         </UserVoteIcon>
       </UserVote>
+      {comment === false ? null : (
+        <Comment
+          comments={postComment}
+          setPostComment={setPostComment}
+          user={userConnected}
+          postId={post.id}
+        ></Comment>
+      )}
     </Post>
   );
 };
