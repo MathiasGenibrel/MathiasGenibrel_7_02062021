@@ -1,15 +1,16 @@
-import { getCookie } from "../utils/Cookie";
-import UserImage from "../components/UserImg";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+
+import { InfiniteScrollPost } from "../components/InfiniteScrollPost";
+import UserImage from "../components/UserImg";
+import usePosts from "../hooks/usePosts";
 import { SignOut } from "../utils/Auth";
-import { useEffect } from "react";
+import { getCookie } from "../utils/Cookie";
 import { ROUTES, fetcher } from "../utils/Api";
+
+import styled from "styled-components";
 import { Icon } from "@iconify/react";
 import featherIcon from "@iconify-icons/fa-solid/feather";
-import usePosts from "../hooks/usePosts";
-import { InfiniteScrollPost } from "../components/InfiniteScrollPost";
 
 const NavContent = styled.nav`
   background-color: ${(props) => props.theme.thirdColor};
@@ -34,17 +35,17 @@ const Content = styled.div`
 
 const AddContent = styled(Link)`
   background-color: ${(props) => props.theme.thirdColor};
-  border-radius: 50%;
   border: solid 0.2rem ${(props) => props.theme.secondColor};
+  box-shadow: 2.5px 5px 8px rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
   height: 3rem;
   width: 3rem;
   bottom: 2rem;
   right: 2rem;
   display: flex;
-  justify-content: center;
-  align-items: center;
   position: fixed;
-  box-shadow: 2.5px 5px 8px rgba(0, 0, 0, 0.4);
 `;
 
 const Title = styled.h2`
@@ -57,12 +58,12 @@ const SignOutBtn = styled(Link)`
 `;
 
 const TextEndPage = styled.p`
-  position: absolute;
-  bottom: 2.8rem;
-  left: 2rem;
   color: ${(props) => props.theme.thirdColor};
+  position: absolute;
   font-size: 1.2rem;
   font-weight: 700;
+  bottom: 2.8rem;
+  left: 2rem;
 `;
 
 const Landing = () => {

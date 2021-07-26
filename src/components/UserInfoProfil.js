@@ -1,9 +1,11 @@
+import React from "react";
+import { Link } from "react-router-dom";
+
+import { getCookie } from "../utils/Cookie";
 import UserImage from "../components/UserImg";
 import SwitchLightMode from "../components/lightMode";
-import React from "react";
+
 import styled from "styled-components";
-import { getCookie } from "../utils/Cookie";
-import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import editIcon from "@iconify-icons/ci/edit";
 

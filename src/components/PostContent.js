@@ -1,12 +1,13 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
+import { getCookie } from "../utils/Cookie";
+import { Comment } from "./Comment";
 import UserImage from "./UserImg";
+
+import styled from "styled-components";
 import { Icon } from "@iconify/react";
 import cancelIcon from "@iconify-icons/iconoir/cancel";
-import { getCookie } from "../utils/Cookie";
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { Comment } from "./Comment";
 
 const Post = styled.div`
   margin: 1.5rem 1rem 0 1rem;
@@ -93,9 +94,7 @@ const PostContent = ({
   const [comment, setComment] = useState(false);
 
   const deletePost =
-    post.userId === getCookie("userId") ? (
-      <Icon icon={cancelIcon} color="#f4f4f4" height="2.2rem" />
-    ) : userConnected.role === "admin" ? (
+    post.userId === getCookie("userId") || userConnected.role === "admin" ? (
       <Icon icon={cancelIcon} color="#f4f4f4" height="2.2rem" />
     ) : null;
   const text = post.text ? <TextPost>{post.text}</TextPost> : null;

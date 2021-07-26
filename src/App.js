@@ -57,7 +57,6 @@ const AppContent = styled.div`
 `;
 
 const App = () => {
-  // initialize with user preferecences form browser
   const [theme, setTheme] = useState(() =>
     window.matchMedia("(prefers-color-scheme: dark)").matches
       ? darkTheme

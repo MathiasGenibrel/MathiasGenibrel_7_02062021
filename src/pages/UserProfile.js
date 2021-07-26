@@ -1,14 +1,16 @@
+import React, { useState } from "react";
+import { useHistory } from "react-router";
+import { useLocation } from "react-router-dom";
+
+import useUserPosts from "../hooks/useUserPosts";
+import Back from "../components/Back";
+import { getCookie } from "../utils/Cookie";
+import DeleteLogo from "../components/DeleteLogo";
 import { UserInfoProfil } from "../components/UserInfoProfil";
 import { InfiniteScrollPost } from "../components/InfiniteScrollPost";
-import DeleteLogo from "../components/DeleteLogo";
-import { useLocation } from "react-router-dom";
-import React, { useState } from "react";
-import useUserPosts from "../hooks/useUserPosts";
-import styled from "styled-components";
-import Back from "../components/Back";
 import { deleteAccount, SignOut } from "../utils/Auth";
-import { useHistory } from "react-router";
-import { getCookie } from "../utils/Cookie";
+
+import styled from "styled-components";
 
 const NavUser = styled.div`
   display: flex;

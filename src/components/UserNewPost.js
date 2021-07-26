@@ -1,17 +1,19 @@
 import React from "react";
+
+import UserImage from "../components/UserImg";
+
 import styled from "styled-components";
 import pictureOne from "@iconify-icons/icon-park-outline/picture-one";
-import UserImage from "../components/UserImg";
 import { Icon } from "@iconify/react";
 
 const UserPost = styled.div`
   background-color: ${(props) => props.theme.secondColor};
+  justify-content: space-between;
   margin: 1.5rem 1rem 8rem;
+  flex-direction: column;
   padding: 1.5rem 0.8rem;
   border-radius: 1rem;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   height: 100%;
 `;
 
@@ -22,11 +24,11 @@ const UserText = styled.div`
 `;
 
 const UserImg = styled.div`
-  width: 100%;
-  display: flex;
+  color: ${(props) => props.theme.primaryColor};
   justify-content: space-around;
   align-items: center;
-  color: ${(props) => props.theme.primaryColor};
+  display: flex;
+  width: 100%;
 `;
 
 const UserInput = styled.textarea`
@@ -46,21 +48,21 @@ const UserInputImg = styled.input`
 `;
 
 const UserInputImgText = styled.p`
+  text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
   max-width: 9rem;
 `;
 
 const UserLabelImg = styled.label`
   background-color: ${(props) => props.theme.thirdColor};
+  justify-content: space-around;
+  border-radius: 0.5rem;
+  align-items: center;
+  font-size: 1.1rem;
   display: flex;
   padding: 1rem;
   width: 12rem;
-  justify-content: space-around;
-  align-items: center;
-  font-size: 1.1rem;
-  border-radius: 0.5rem;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
     inset 5px 4px 4px rgba(255, 146, 51, 0.15);
   &:hover {

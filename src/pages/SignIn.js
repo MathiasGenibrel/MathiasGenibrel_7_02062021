@@ -1,10 +1,12 @@
+import React, { useState } from "react";
+import { Link, useHistory, useParams } from "react-router-dom";
+
 import InputWithLabel from "../components/Input";
 import Button from "../components/Button";
 import LogoSvg from "../components/Logo";
-import { Link, useHistory, useParams } from "react-router-dom";
-import styled from "styled-components";
 import { LoggingIn } from "../utils/Auth";
-import React, { useState } from "react";
+
+import styled from "styled-components";
 
 const SignContent = styled.div`
   display: flex;

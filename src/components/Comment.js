@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
+import { getCookie } from "../utils/Cookie";
+import UserImage from "./UserImg";
+import sendComment from "../utils/sendComment";
+import deleteComment from "../utils/deleteComment";
+
+import styled from "styled-components";
 import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import send16Filled from "@iconify-icons/fluent/send-16-filled";
 import cancelIcon from "@iconify-icons/iconoir/cancel";
-import { fetcher, ROUTES } from "../utils/Api";
 import { Icon } from "@iconify/react";
-import styled from "styled-components";
-import { getCookie } from "../utils/Cookie";
-import { useState } from "react";
-import UserImage from "./UserImg";
 
 const CreateComment = styled.div`
   display: flex;
@@ -57,38 +58,6 @@ export const Comment = ({ comments, postId, setPostComment, user }) => {
     setInputComment(value);
   };
 
-  const sendComment = async () => {
-    if (inputComment === "") return;
-    const comment = { comment: inputComment, postId };
-    const response = await fetcher(`${ROUTES.comment}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${getCookie("BearerToken")}`,
-      },
-      body: JSON.stringify(comment),
-    });
-    const newComment = {
-      ...response,
-      user,
-    };
-    setInputComment("");
-    setPostComment([newComment, ...comments]);
-  };
-
-  const deleteComment = async (id, userRole) => {
-    const route =
-      userRole === "admin"
-        ? `${ROUTES.comment}/admin/${id}`
-        : `${ROUTES.comment}/${id}`;
-
-    await fetcher(route, {
-      method: "DELETE",
-      headers: { authorization: `Bearer ${getCookie("BearerToken")}` },
-    });
-    setPostComment(comments.filter((comment) => comment.id !== id));
-  };
-
   const deleteDisplayComment = (comment) => {
     if (getCookie("userId") === comment.userId || user.role === "admin")
       return (
@@ -96,7 +65,9 @@ export const Comment = ({ comments, postId, setPostComment, user }) => {
           icon={cancelIcon}
           color="#f4f4f4"
           height="2.2rem"
-          onClick={() => deleteComment(comment.id, user.role)}
+          onClick={() =>
+            deleteComment(comment.id, user.role, comments, setPostComment)
+          }
         />
       );
     return null;
@@ -112,7 +83,19 @@ export const Comment = ({ comments, postId, setPostComment, user }) => {
           value={inputComment}
           onChange={handleChange}
         />
-        <IconButton aria-label="send" onClick={sendComment}>
+        <IconButton
+          aria-label="send"
+          onClick={() =>
+            sendComment(
+              comments,
+              postId,
+              setPostComment,
+              user,
+              inputComment,
+              setInputComment
+            )
+          }
+        >
           <SendCommentIcon icon={send16Filled} />
         </IconButton>
       </CreateComment>

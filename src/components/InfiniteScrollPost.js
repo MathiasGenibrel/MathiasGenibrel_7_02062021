@@ -1,5 +1,6 @@
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+
 import { deletePost } from "../utils/Post";
 import { upVote, downVote } from "../utils/Post";
 import PostContent from "./PostContent";

@@ -1,13 +1,15 @@
+import { React, useState } from "react";
 import { Link, useLocation, useHistory } from "react-router-dom";
-import send16Filled from "@iconify-icons/fluent/send-16-filled";
-import featherIcon from "@iconify-icons/fa-solid/feather";
+
 import { UserNewPost } from "../components/UserNewPost";
-import cancelIcon from "@iconify-icons/iconoir/cancel";
 import { fetcher, ROUTES } from "../utils/Api";
 import { getCookie } from "../utils/Cookie";
-import { React, useState } from "react";
-import { Icon } from "@iconify/react";
+
 import styled from "styled-components";
+import { Icon } from "@iconify/react";
+import cancelIcon from "@iconify-icons/iconoir/cancel";
+import featherIcon from "@iconify-icons/fa-solid/feather";
+import send16Filled from "@iconify-icons/fluent/send-16-filled";
 
 const NavContent = styled.nav`
   background-color: ${(props) => props.theme.thirdColor};
