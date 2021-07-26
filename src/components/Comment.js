@@ -2,6 +2,7 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import send16Filled from "@iconify-icons/fluent/send-16-filled";
+import cancelIcon from "@iconify-icons/iconoir/cancel";
 import { fetcher, ROUTES } from "../utils/Api";
 import { Icon } from "@iconify/react";
 import styled from "styled-components";
@@ -24,6 +25,7 @@ const UserCommentContent = styled.div`
   flex-direction: column;
   margin: 0.5rem 0.5rem 1rem 0.5rem;
   padding: 0.5rem;
+  position: relative;
   border: solid ${(props) => props.theme.primaryColor};
   border-radius: 1rem;
 `;
@@ -40,6 +42,12 @@ const UserInfoText = styled.div`
 const UserComment = styled.span`
   text-align: left;
   margin-left: 3.5rem;
+`;
+
+const DeleteIcon = styled(Icon)`
+  position: absolute;
+  right: 0;
+  top: 0;
 `;
 
 export const Comment = ({ comments, postId, setPostComment, user }) => {
@@ -68,6 +76,32 @@ export const Comment = ({ comments, postId, setPostComment, user }) => {
     setPostComment([newComment, ...comments]);
   };
 
+  const deleteComment = async (id, userRole) => {
+    const route =
+      userRole === "admin"
+        ? `${ROUTES.comment}/admin/${id}`
+        : `${ROUTES.comment}/${id}`;
+
+    await fetcher(route, {
+      method: "DELETE",
+      headers: { authorization: `Bearer ${getCookie("BearerToken")}` },
+    });
+    setPostComment(comments.filter((comment) => comment.id !== id));
+  };
+
+  const deleteDisplayComment = (comment) => {
+    if (getCookie("userId") === comment.userId || user.role === "admin")
+      return (
+        <DeleteIcon
+          icon={cancelIcon}
+          color="#f4f4f4"
+          height="2.2rem"
+          onClick={() => deleteComment(comment.id, user.role)}
+        />
+      );
+    return null;
+  };
+
   return (
     <>
       <CreateComment>
@@ -90,6 +124,7 @@ export const Comment = ({ comments, postId, setPostComment, user }) => {
                 role={commentPost.user.role}
                 name={commentPost.user.name}
               />
+              {deleteDisplayComment(commentPost)}
               <UserInfoText>
                 <p>{commentPost.user.name}</p>
                 <p>{commentPost.user.description}</p>
