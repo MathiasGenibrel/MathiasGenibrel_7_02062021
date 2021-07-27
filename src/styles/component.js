@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 export const InputText = styled.label`
   color: ${(props) => props.theme.primaryColor};
-  margin: calc(var(--spacing) * 1) 0 0.3rem 0.5rem;
+  margin: 1rem 0 0.3rem 0.5rem;
   font-size: 0.9rem;
   font-weight: 500;
   text-align: left;
@@ -14,8 +14,8 @@ export const InputUser = styled.input`
   background: ${(props) => props.theme.thirdColor};
   color: ${(props) => props.theme.primaryColor};
   height: 60px;
-  width: calc(260px - var(--spacing));
-  padding-left: var(--spacing);
+  width: calc(260px - 1rem);
+  padding-left: 1rem;
   border-radius: 15px;
   box-shadow: 4px 4px 8px rgba(1, 24, 39, 0.35),
     inset 5px 4px 4px rgba(255, 146, 51, 0.15);
@@ -36,7 +36,7 @@ export const StyledButton = styled.button`
   font-size: 1.2rem;
   font-weight: 700;
   border-radius: 15px;
-  margin-top: calc(var(--spacing) * 1.5);
+  margin-top: 1.5rem;
   box-shadow: 4px 4px 8px rgba(1, 24, 39, 0.35),
     inset 5px 4px 4px rgba(255, 146, 51, 0.15);
   &:active {
@@ -52,7 +52,7 @@ export const StyledButtonReverse = styled.button`
   font-size: 1.2rem;
   font-weight: 700;
   border-radius: 15px;
-  margin-top: calc(var(--spacing) * 1.5);
+  margin-top: 1.5rem;
   box-shadow: 4px 4px 8px rgba(1, 24, 39, 0.35),
     inset 5px 4px 4px rgba(255, 146, 51, 0.15);
   &:active {
@@ -75,7 +75,7 @@ export const IconFill = styled.path`
 //Back.js
 
 export const Icon = styled.i`
-  color: ${props => props.theme.primaryColor};
+  color: ${(props) => props.theme.primaryColor};
   font-size: 1.8rem;
 `;
 
@@ -92,7 +92,7 @@ export const DeleteIcon = styled.svg`
 
 export const LogoSvg = styled.div`
   position: relative;
-  padding: 0 0 calc(var(--spacing) / 2) 0;
+  padding: 0 0 0.5rem 0;
 `;
 export const LogoTitle = styled.h1`
   position: absolute;
