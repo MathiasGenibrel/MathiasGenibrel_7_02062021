@@ -1,82 +1,25 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 
 import { getCookie } from "../utils/Cookie";
 import { Comment } from "./Comment";
 import UserImage from "./UserImg";
 
-import styled from "styled-components";
 import { Icon } from "@iconify/react";
 import cancelIcon from "@iconify-icons/iconoir/cancel";
+import {
+  Post,
+  UserInfo,
+  UserProfilImg,
+  UserVote,
+  UserProfilText,
+  UserProfilName,
+  UserPost,
+  UserVoteIcon,
+  DeletePost,
+  ImgPost,
+  TextPost,
+} from "../styles/postContent";
 
-const Post = styled.div`
-  margin: 1.5rem 1rem 0 1rem;
-  padding: 0.5rem;
-  background-color: ${(props) => props.theme.secondColor};
-  color: ${(props) => props.theme.primaryColor};
-  border-radius: 1rem;
-  position: relative;
-`;
-
-const UserInfo = styled(Link)`
-  display: flex;
-  margin: 0.7rem 0.5rem 1.3rem 0.5rem;
-  color: ${(props) => props.theme.primaryColor};
-`;
-
-const UserProfilImg = styled.div`
-  position: relative;
-  margin-right: 1rem;
-  text-align: left;
-`;
-
-const UserProfilText = styled.div`
-  text-align: left;
-`;
-
-const UserProfilName = styled.h3`
-  font-size: 1.2rem;
-  font-weight: 700;
-  text-transform: capitalize;
-`;
-
-const UserPost = styled.div`
-  margin-bottom: 1rem;
-  text-align: left;
-`;
-
-const UserVote = styled.div`
-  display: flex;
-  justify-content: space-around;
-`;
-
-const UserVoteIcon = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 2rem;
-  &:active {
-    transform: scale(0.95);
-  }
-`;
-
-const DeletePost = styled.div`
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  color: #f4f4f4;
-`;
-
-const ImgPost = styled.img`
-  width: 100%;
-  max-height: 280px;
-  object-fit: cover;
-  margin: 1rem 0 0.5rem 0;
-  border-radius: 0.5rem;
-`;
-
-const TextPost = styled.p`
-  overflow-wrap: break-word;
-`;
 const PostContent = ({
   post,
   user,
@@ -97,10 +40,12 @@ const PostContent = ({
     post.userId === getCookie("userId") || userConnected.role === "admin" ? (
       <Icon icon={cancelIcon} color="#f4f4f4" height="2.2rem" />
     ) : null;
-  const text = post.text ? <TextPost>{post.text}</TextPost> : null;
+
   const img = post.imgUrl ? (
     <ImgPost src={post.imgUrl} alt={`Utilisateur : ${post.user.name}`} />
   ) : null;
+
+  const text = post.text ? <TextPost>{post.text}</TextPost> : null;
 
   const userUpVote = () => {
     if (vote === "upVote") return;

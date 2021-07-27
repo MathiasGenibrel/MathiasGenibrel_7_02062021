@@ -4,52 +4,19 @@ import UserImage from "./UserImg";
 import sendComment from "../utils/sendComment";
 import deleteComment from "../utils/deleteComment";
 
-import styled from "styled-components";
 import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import send16Filled from "@iconify-icons/fluent/send-16-filled";
 import cancelIcon from "@iconify-icons/iconoir/cancel";
-import { Icon } from "@iconify/react";
-
-const CreateComment = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-end;
-`;
-
-const SendCommentIcon = styled(Icon)`
-  color: ${(props) => props.theme.primaryColor};
-`;
-
-const UserCommentContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 0.5rem 0.5rem 1rem 0.5rem;
-  padding: 0.5rem;
-  position: relative;
-  border: solid ${(props) => props.theme.primaryColor};
-  border-radius: 1rem;
-`;
-
-const UserInfo = styled.div`
-  display: flex;
-`;
-
-const UserInfoText = styled.div`
-  text-align: left;
-  margin-left: 1rem;
-`;
-
-const UserComment = styled.span`
-  text-align: left;
-  margin-left: 3.5rem;
-`;
-
-const DeleteIcon = styled(Icon)`
-  position: absolute;
-  right: 0;
-  top: 0;
-`;
+import {
+  CreateComment,
+  SendCommentIcon,
+  UserCommentContent,
+  UserInfo,
+  UserInfoText,
+  UserComment,
+  DeleteIcon,
+} from "../styles/comment";
 
 export const Comment = ({ comments, postId, setPostComment, user }) => {
   const [inputComment, setInputComment] = useState("");

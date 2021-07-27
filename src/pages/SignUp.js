@@ -7,29 +7,7 @@ import LogoSvg from "../components/Logo";
 import Back from "../components/Back";
 import { LoggingIn } from "../utils/Auth";
 
-import styled from "styled-components";
-
-const SignContent = styled.div`
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  padding: calc(var(--spacing) * 0.5) 0 calc(var(--spacing) * 1.5) 0;
-  width: 300px;
-  border: 1.5px solid #011827;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
-  border-radius: 25px;
-  background-color: ${(props) => props.theme.secondColor};
-  height: fit-content;
-  margin: auto 0;
-`;
-
-const BackPostion = styled.div`
-  position: absolute;
-  left: 1.5rem;
-  top: 1.5rem;
-`;
+import { SignContent, BackPostion } from "../styles/signUp";
 
 const SignUp = () => {
   const { slug } = useParams();
@@ -37,14 +15,19 @@ const SignUp = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleKeydown = (e) => {
-    if (e.key === "Enter") handleClick()
-  }
+    if (e.key === "Enter") handleClick();
+  };
 
   const handleClick = async () => {
-    const userLogin = await LoggingIn(slug, username, password, confirmPassword);
+    const userLogin = await LoggingIn(
+      slug,
+      username,
+      password,
+      confirmPassword
+    );
     if (userLogin) redirect.push("/main");
   };
 
@@ -55,7 +38,7 @@ const SignUp = () => {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value.trim());
   };
-  
+
   const handleConfirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value.trim());
   };

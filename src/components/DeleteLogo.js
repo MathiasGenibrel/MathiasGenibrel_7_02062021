@@ -1,12 +1,5 @@
 import React from "react";
-import styled from "styled-components";
-
-const DeleteIcon = styled.svg`
-  position: relative;
-  right: 0;
-  bottom: 0;
-  color: ${props => props.theme.secondColor}
-`;
+import { DeleteIcon } from "../styles/component";
 
 const DeleteLogo = ({ height = "1.4rem", onClick }) => {
   return (

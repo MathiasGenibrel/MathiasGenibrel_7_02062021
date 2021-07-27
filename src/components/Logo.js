@@ -1,21 +1,5 @@
 import React from "react";
-import styled from "styled-components";
-
-const LogoSvg = styled.div`
-  position: relative;
-  padding: 0 0 calc(var(--spacing) / 2) 0;
-`;
-const LogoTitle = styled.h1`
-  position: absolute;
-  bottom: 0.5rem;
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: ${(props) => props.theme.primaryColor};
-`;
-
-const ColorLogo = styled.g`
-  fill: ${(props) => props.theme.primaryColor};
-`;
+import { LogoSvg, LogoTitle, ColorLogo } from "../styles/component";
 
 const Logo = ({ height = "80px" }) => {
   return (

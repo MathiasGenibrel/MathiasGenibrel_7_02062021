@@ -10,25 +10,7 @@ import { UserInfoProfil } from "../components/UserInfoProfil";
 import { InfiniteScrollPost } from "../components/InfiniteScrollPost";
 import { deleteAccount, SignOut } from "../utils/Auth";
 
-import styled from "styled-components";
-
-const NavUser = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  top: 0;
-  left: 0;
-  padding-bottom: 2.5rem;
-`;
-
-const Navigation = styled.nav`
-  background-color: ${(props) => props.theme.thirdColor};
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 2.5rem;
-  display: flex;
-  height: 90px;
-`;
+import { NavUser, Navigation } from "../styles/userProfile";
 
 const UserProfile = () => {
   const redirect = useHistory();

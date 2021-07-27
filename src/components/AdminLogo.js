@@ -1,15 +1,5 @@
 import React from "react";
-import styled from "styled-components";
-
-const AdminIcon = styled.svg`
-  position: absolute;
-  right: 0;
-  bottom: 0;
-`;
-const IconFill = styled.path`
-  fill: ${(props) => props.theme.primaryColor};
-  stroke: ${(props) => props.theme.thirdColor};
-`;
+import { AdminIcon, IconFill } from "../styles/component";
 
 const AdminLogo = ({ height = "1rem" }) => {
   return (

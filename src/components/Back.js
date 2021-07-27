@@ -1,12 +1,6 @@
 import { useHistory } from "react-router-dom";
 import React from "react";
-import styled from "styled-components";
-
-const Icon = styled.i`
-  /* position: absolute; */
-  color: ${props => props.theme.primaryColor};
-  font-size: 1.8rem;
-`;
+import {Icon} from "../styles/component";
 
 export default function Back({ angle = 0 }) {
   let history = useHistory();
