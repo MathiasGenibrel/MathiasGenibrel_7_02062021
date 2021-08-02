@@ -40,16 +40,4 @@ db.posts.hasMany(db.votes);
 db.votes.belongsTo(db.users);
 db.votes.belongsTo(db.posts);
 
-
-// //Inner join
-
-// const tryInner = db.comments.findAll({ include: db.posts });
-// console.log(JSON.stringify(tryInner, null, 2));
-
-//only for dev
-
-// db.sequelize.sync({ force: true }).then(() => {
-//   console.log("Drop and re-sync db.");
-// });
-
 module.exports = db;

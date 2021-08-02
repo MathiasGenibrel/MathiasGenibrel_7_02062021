@@ -64,7 +64,6 @@ const editProfile = async (
     },
     body: JSON.stringify({ name, description }),
   }).then((user) => {
-    console.log(user);
     setSeverity(user.status === 200 ? "success" : "error");
     setError(`${user.message}`);
     setOpen(true);

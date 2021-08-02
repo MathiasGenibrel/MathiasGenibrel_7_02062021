@@ -3,7 +3,6 @@ const DB = require("../models");
 const COMMENTS = DB.comments;
 
 exports.create = (req, res) => {
-  console.log(req.body)
   if (!req.body.comment) {
     return res.status(400).send({
       message: "body cannot be empty!",
