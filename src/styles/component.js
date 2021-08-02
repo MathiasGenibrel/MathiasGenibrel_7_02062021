@@ -118,3 +118,9 @@ export const UserAdmin = styled.span`
   bottom: 0;
   right: 0;
 `;
+
+export const UserImgContent = styled.div`
+  position: relative;
+  height: fit-content;
+  width: fit-content;
+`;
