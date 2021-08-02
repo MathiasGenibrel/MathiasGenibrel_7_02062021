@@ -2,13 +2,14 @@ import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import { deletePost } from "../utils/Post";
-import { upVote, downVote } from "../utils/Post";
+import { userVote } from "../utils/Post";
 import PostContent from "./PostContent";
 
 export const InfiniteScrollPost = ({
   posts,
   user,
   userConnected,
+  onProfile,
   refetch,
   offset,
   setOffset,
@@ -29,13 +30,14 @@ export const InfiniteScrollPost = ({
           userConnected={userConnected}
           key={post.id}
           post={post}
+          onProfile={onProfile ?? false}
           user={user}
           onClickDelete={() => {
             deletePostDisplay(post.id);
             deletePost(post.id, user.role);
           }}
-          onClickUpVote={(vote, id) => upVote(vote, id)}
-          onClickDownVote={(vote, id) => downVote(vote, id)}
+          onClickUpVote={(vote, id) => userVote(vote, id)}
+          onClickDownVote={(vote, id) => userVote(vote, id)}
         />
       ))}
     </InfiniteScroll>

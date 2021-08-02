@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 
 import InputWithLabel from "../components/Input";
 import Button from "../components/Button";
 import LogoSvg from "../components/Logo";
+
 import { LoggingIn } from "../utils/Auth";
+
+import useInput from "../hooks/useInput";
 
 import { SignContent, SignUpLink } from "../styles/signIn";
 
@@ -28,16 +31,8 @@ const SignIn = () => {
     if (userLogin) redirect.push("/main");
   };
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value.trimStart());
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value.trim());
-  };
+  const [username, handleUsernameChange] = useInput("");
+  const [password, handlePasswordChange] = useInput("");
 
   return (
     <SignContent>

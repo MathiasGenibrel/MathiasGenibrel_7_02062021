@@ -11,6 +11,8 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import { UserInfoProfil } from "../components/UserInfoProfil";
 
+import useInput from "../hooks/useInput";
+
 import { Snackbar } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
 
@@ -20,22 +22,14 @@ const UserEditProfile = () => {
   const [open, setOpen] = useState(false);
   const [severity, setSeverity] = useState("error");
   const [error, setError] = useState("404 not found");
-  const [username, setUsername] = useState("");
-  const [description, setDescription] = useState("");
+  const [username, handleNameChange] = useInput("");
+  const [description, handleDescriptionChange] = useInput("");
 
   const redirect = useHistory();
 
   function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   }
-
-  const handleNameChange = (e) => {
-    setUsername(e.target.value.trimStart());
-  };
-
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value.trimStart());
-  };
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") return;
@@ -55,15 +49,17 @@ const UserEditProfile = () => {
       <EditProfile>
         <Input
           value={username}
+          placeholder={user.name}
           onChange={handleNameChange}
           label="name"
           text="Nom :"
         ></Input>
         <Input
           value={description}
+          placeholder={user.description}
           onChange={handleDescriptionChange}
           label="description"
-          text="Votre rôle :"
+          text="Parlez de vous :"
         ></Input>
         <Button
           onClick={() =>

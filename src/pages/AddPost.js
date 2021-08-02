@@ -1,14 +1,15 @@
 import { React, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useHistory } from "react-router";
-
-import { UserNewPost } from "../components/UserNewPost";
-import SendPost from "../utils/sendPost";
-
 import { Icon } from "@iconify/react";
 import cancelIcon from "@iconify-icons/iconoir/cancel";
 import featherIcon from "@iconify-icons/fa-solid/feather";
 import send16Filled from "@iconify-icons/fluent/send-16-filled";
+
+import { UserNewPost } from "../components/UserNewPost";
+
+import SendPost from "../utils/sendPost";
+
 import {
   NavContent,
   NewPostContent,

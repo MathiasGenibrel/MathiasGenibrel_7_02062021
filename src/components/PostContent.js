@@ -8,6 +8,7 @@ import { Icon } from "@iconify/react";
 import cancelIcon from "@iconify-icons/iconoir/cancel";
 import {
   Post,
+  UserInfoLink,
   UserInfo,
   UserProfilImg,
   UserVote,
@@ -23,6 +24,7 @@ import {
 const PostContent = ({
   post,
   user,
+  onProfile,
   userConnected,
   onClickDelete,
   onClickUpVote,
@@ -47,8 +49,36 @@ const PostContent = ({
 
   const text = post.text ? <TextPost>{post.text}</TextPost> : null;
 
+  const userInfo = (
+    <>
+      <UserProfilImg>
+        <UserImage role={post.user.role} name={post.user.name} />
+      </UserProfilImg>
+      <UserProfilText>
+        <UserProfilName>{post.user.name}</UserProfilName>
+        <span style={{ fontSize: ".9rem" }}>{post.user.description}</span>
+      </UserProfilText>
+    </>
+  );
+
+  const userInfoContent = onProfile ? (
+    <UserInfo>{userInfo}</UserInfo>
+  ) : (
+    <UserInfoLink
+      to={{
+        pathname: `/main/${post.user.name}`,
+        state: { user: post.user, userConnected: user },
+      }}
+    >
+      {userInfo}
+    </UserInfoLink>
+  );
+
   const userUpVote = () => {
-    if (vote === "upVote") return;
+    if (vote === "upVote") {
+      setVote("none");
+      return setUpVote(upVote - 1);
+    }
     if (vote === "none") {
       setVote("upVote");
       return setUpVote(upVote + 1);
@@ -59,7 +89,10 @@ const PostContent = ({
   };
 
   const userDownVote = () => {
-    if (vote === "downVote") return;
+    if (vote === "downVote") {
+      setVote("none");
+      return setDownVote(downVote - 1);
+    }
     if (vote === "none") {
       setVote("downVote");
       return setDownVote(downVote + 1);
@@ -76,20 +109,7 @@ const PostContent = ({
 
   return (
     <Post>
-      <UserInfo
-        to={{
-          pathname: `/main/${post.user.name}`,
-          state: { user: post.user, userConnected: user },
-        }}
-      >
-        <UserProfilImg>
-          <UserImage role={post.user.role} name={post.user.name} />
-        </UserProfilImg>
-        <UserProfilText>
-          <UserProfilName>{post.user.name}</UserProfilName>
-          <span style={{ fontSize: ".9rem" }}>{post.user.description}</span>
-        </UserProfilText>
-      </UserInfo>
+      {userInfoContent}
       <DeletePost onClick={onClickDelete}>{deletePost}</DeletePost>
       <UserPost>
         {text}
@@ -99,7 +119,10 @@ const PostContent = ({
         <UserVoteIcon
           onClick={() => {
             userUpVote();
-            onClickUpVote(vote, post.id);
+            onClickUpVote(
+              vote === "none" || vote === "downVote" ? "upVote" : "none",
+              post.id
+            );
           }}
         >
           <i className="fas fa-arrow-up"></i>
@@ -109,7 +132,10 @@ const PostContent = ({
         <UserVoteIcon
           onClick={() => {
             userDownVote();
-            onClickDownVote(vote, post.id);
+            onClickDownVote(
+              vote === "none" || vote === "upVote" ? "downVote" : "none",
+              post.id
+            );
           }}
         >
           <i className="fas fa-arrow-down"></i>

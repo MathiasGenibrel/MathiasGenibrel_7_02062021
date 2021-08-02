@@ -23,13 +23,3 @@ export const userVote = async (vote, id) => {
     body: JSON.stringify({ vote: vote }),
   });
 };
-
-export const upVote = (votes, id, refetch) => {
-  if (votes === "none") return userVote("upVote", id, refetch);
-  if (votes !== "upVote") return userVote("upVote", id, refetch);
-};
-
-export const downVote = (votes, id, refetch) => {
-  if (votes === "none") return userVote("downVote", id, refetch);
-  if (votes !== "downVote") return userVote("downVote", id, refetch);
-};

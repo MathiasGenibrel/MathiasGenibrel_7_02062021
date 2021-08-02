@@ -1,11 +1,13 @@
-import { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
 import InputWithLabel from "../components/Input";
 import Button from "../components/Button";
 import LogoSvg from "../components/Logo";
 import Back from "../components/Back";
+
 import { LoggingIn } from "../utils/Auth";
+
+import useInput from "../hooks/useInput";
 
 import { SignContent, BackPostion } from "../styles/signUp";
 
@@ -13,9 +15,9 @@ const SignUp = () => {
   const { slug } = useParams();
   const redirect = useHistory();
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [username, handleUsernameChange] = useInput("");
+  const [password, handlePasswordChange] = useInput("");
+  const [confirmPassword, handleConfirmPasswordChange] = useInput("");
 
   const handleKeydown = (e) => {
     if (e.key === "Enter") handleClick();
@@ -29,18 +31,6 @@ const SignUp = () => {
       confirmPassword
     );
     if (userLogin) redirect.push("/main");
-  };
-
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value.trimStart());
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value.trim());
-  };
-
-  const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value.trim());
   };
 
   return (
