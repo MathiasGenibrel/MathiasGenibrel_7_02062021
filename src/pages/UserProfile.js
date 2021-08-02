@@ -51,7 +51,7 @@ const UserProfile = () => {
       </Navigation>
       <UserInfoProfil user={user} switchMode={switchMode} theme={theme} />
       <InfiniteScrollPost
-        userConnected={userConnected}
+        userConnected={userConnected ?? user}
         posts={posts}
         user={user}
         onProfile={true}
