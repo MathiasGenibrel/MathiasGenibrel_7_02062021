@@ -160,6 +160,17 @@ exports.findAllByUserId = (req, res) => {
     include: [
       { model: DB.users, attributes: ["name", "description", "role"] },
       {
+        model: DB.comments,
+        attributes: ["id", "comment", "createdAt", "updatedAt", "userId"],
+        limit: 5,
+        include: [
+          {
+            model: DB.users,
+            attributes: ["name", "description", "role"],
+          },
+        ],
+      },
+      {
         model: VOTES,
         required: false,
         where: { userId: getIdUser(req) },
