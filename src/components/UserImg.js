@@ -12,13 +12,11 @@ const UserImage = ({ role, name = "default", height = "40px" }) => {
     <div
       style={{
         position: "relative",
-        width: "fit-content",
-        height: "fit-content",
       }}
     >
       <UserImg
         style={{ height: `${height}` }}
-        src={require("../assets/img/default_profile_pic.jpg").default}
+        src={`https://eu.ui-avatars.com/api/?name=${name}&background=random&bold=true&uppercase=false`}
         alt={`Utilisateur : ${name}`}
       />
       <UserAdmin>{isAdmin}</UserAdmin>
