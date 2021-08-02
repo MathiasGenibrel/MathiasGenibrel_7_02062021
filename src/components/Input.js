@@ -1,7 +1,7 @@
 import React from "react";
-import {InputText, InputUser, InputContent} from "../styles/component"
+import { InputText, InputUser, InputContent } from "../styles/component";
 
-const Input = ({ label, type, value, onChange, onKeyDown }) => {
+const Input = ({ label, type, value, onChange, onKeyDown, placeholder }) => {
   return (
     <InputUser
       name={label}
@@ -10,6 +10,7 @@ const Input = ({ label, type, value, onChange, onKeyDown }) => {
       value={value}
       onChange={onChange}
       onKeyDown={onKeyDown}
+      placeholder={placeholder}
     />
   );
 };
@@ -30,6 +31,7 @@ const InputWithLabel = ({
   value,
   onChange,
   onKeyDown,
+  placeholder,
 }) => {
   return (
     <InputContent>
@@ -40,6 +42,7 @@ const InputWithLabel = ({
           value={value}
           onChange={onChange}
           onKeyDown={onKeyDown}
+          placeholder={placeholder}
         ></Input>
       </WithLabel>
     </InputContent>
