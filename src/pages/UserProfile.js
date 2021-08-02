@@ -54,6 +54,7 @@ const UserProfile = () => {
         userConnected={userConnected}
         posts={posts}
         user={user}
+        onProfile={true}
         refetch={refetch}
         offset={offset}
         setOffset={setOffset}

@@ -10,7 +10,13 @@ export const Post = styled.div`
   position: relative;
 `;
 
-export const UserInfo = styled(Link)`
+export const UserInfoLink = styled(Link)`
+  display: flex;
+  margin: 0.7rem 0.5rem 1.3rem 0.5rem;
+  color: ${(props) => props.theme.primaryColor};
+`;
+
+export const UserInfo = styled.div`
   display: flex;
   margin: 0.7rem 0.5rem 1.3rem 0.5rem;
   color: ${(props) => props.theme.primaryColor};
