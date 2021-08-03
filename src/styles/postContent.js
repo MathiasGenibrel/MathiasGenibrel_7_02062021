@@ -4,10 +4,15 @@ import { Link } from "react-router-dom";
 export const Post = styled.div`
   margin: 1.5rem 1rem 0 1rem;
   padding: 0.5rem;
+  width: auto;
+  max-width: 500px;
   background-color: ${(props) => props.theme.secondColor};
   color: ${(props) => props.theme.primaryColor};
   border-radius: 1rem;
   position: relative;
+  @media (min-device-width: 550px) {
+    margin: 1.5rem auto 0;
+  }
 `;
 
 export const UserInfoLink = styled(Link)`
@@ -70,6 +75,9 @@ export const ImgPost = styled.img`
   object-fit: cover;
   margin: 1rem 0 0.5rem 0;
   border-radius: 0.5rem;
+  @media (min-device-width: 550px) {
+    max-height: 380px;
+  }
 `;
 
 export const TextPost = styled.p`

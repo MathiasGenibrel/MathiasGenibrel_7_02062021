@@ -48,9 +48,7 @@ export const SignOutBtn = styled(Link)`
 
 export const TextEndPage = styled.p`
   color: ${(props) => props.theme.thirdColor};
-  position: absolute;
   font-size: 1.2rem;
   font-weight: 700;
-  bottom: 2.8rem;
-  left: 2rem;
+  margin-top: 3rem;
 `;
