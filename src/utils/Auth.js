@@ -5,13 +5,30 @@ export const LoggingIn = async (
   location,
   userName,
   password,
-  confirmPassword
+  confirmPassword,
+  setError,
+  setSeverity,
+  setOpen
 ) => {
   let apiLocation = location.toLowerCase();
 
-  if (!userName || !password) return console.error("Des champs sont vides");
-  if (apiLocation === "signup" && password !== confirmPassword)
-    return console.error("Les mots de passe ne sont pas identique");
+  if (!userName || !password) {
+    setError("Des champs sont vides !");
+    setSeverity("error");
+    return setOpen(true);
+  }
+  if (apiLocation === "signup" && password !== confirmPassword) {
+    setError("Les mots de passe ne sont pas identique");
+    setSeverity("error");
+    return setOpen(true);
+  }
+  if (!password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm)) {
+    setError(
+      "Le mot de passe doit faire au moins 8 caractères et doit contenir au moins 1 majuscule, 1 minuscule et 1 nombre"
+    );
+    setSeverity("error");
+    return setOpen(true);
+  }
 
   const user = {
     name: userName,
@@ -30,7 +47,7 @@ export const LoggingIn = async (
     return LoggingIn("signIn", user.name, user.password);
 
   const infoUser = await response;
-  if (infoUser.userId === undefined) return false
+  if (infoUser.userId === undefined) return false;
 
   setCookie("userId", infoUser.userId);
   setCookie("BearerToken", infoUser.token);

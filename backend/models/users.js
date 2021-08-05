@@ -26,6 +26,9 @@ module.exports = (sequelize, Sequelize) => {
       password: {
         type: Sequelize.STRING(128),
         allowNull: false,
+        validate: {
+          is: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm,
+        },
       },
     },
     {
